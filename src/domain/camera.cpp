@@ -8,21 +8,11 @@
 #include "camera.h"
 #include <pthread.h>
 
-mutex mtxCam;
-
-void* task(void* param) {
-	Camera *camera = (Camera *) param;
-	while (true)
-	{
-		camera->cap >> camera->frame;
-	}
-}
-
 Camera::Camera():cap(0) {
 	this->cap.set(CV_CAP_PROP_FRAME_WIDTH,640);
 	this->cap.set(CV_CAP_PROP_FRAME_HEIGHT,480);
-	this->cap.set(CV_CAP_PROP_BUFFERSIZE,3);
-	this->cap.set(CV_CAP_PROP_XI_BUFFERS_QUEUE_SIZE,3);
+//	this->cap.set(CV_CAP_PROP_BUFFERSIZE,3);
+//	this->cap.set(CV_CAP_PROP_XI_BUFFERS_QUEUE_SIZE,3);
 
 	cout << "Buffer queue size: " << this->cap.get(CV_CAP_PROP_XI_BUFFERS_QUEUE_SIZE) << endl;
 	cout << "Buffer size: " << this->cap.get(CV_CAP_PROP_BUFFERSIZE) << endl;
@@ -44,8 +34,8 @@ Camera::Camera():cap(0) {
 	cout << "Exposure: " << this->cap.get(CV_CAP_PROP_EXPOSURE) << endl;
 	cout << "Convert RGB: " << this->cap.get(CV_CAP_PROP_CONVERT_RGB) << endl;
 	cout << "Rectification: " << this->cap.get(CV_CAP_PROP_RECTIFICATION) << endl;
-	pthread_t t;
-	pthread_create(&t, NULL, task, (void *) this);
+//	pthread_t t;
+//	pthread_create(&t, NULL, task, (void *) this);
 }
 
 
@@ -60,5 +50,6 @@ Mat Camera::takeSnapshot() {
 //	if (!bSuccess) {
 //		 cout << "Cannot read a frame from video stream" << endl;
 //	}
+	this->cap >> this->frame;
 	return this->frame;
 }
