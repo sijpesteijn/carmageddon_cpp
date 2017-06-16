@@ -20,7 +20,8 @@ int Camera::status() {
 
 Mat Camera::takeSnapshot() {
 	Mat frame;
-	cap.grab();
+	double count = cap.get(CV_CAP_PROP_FRAME_COUNT); //get the frame count
+	cap.set(CV_CAP_PROP_POS_FRAMES,count-1);
 	bool bSuccess = cap.read(frame);
 	if (!bSuccess) {
 		 cout << "Cannot read a frame from video stream" << endl;
