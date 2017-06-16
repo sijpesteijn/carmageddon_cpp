@@ -19,9 +19,6 @@ int Camera::status() {
 
 Mat Camera::takeSnapshot() {
 	Mat frame;
-	bool bSuccess = cap.read(frame);
-	if (!bSuccess) {
-		 cout << "Cannot read a frame from video stream" << endl;
-	}
+	cap >> frame;
 	return frame;
 }
