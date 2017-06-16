@@ -9,6 +9,16 @@
 #include <chrono>
 #include <pthread.h>
 
+void* frameGrabber(void* params) {
+	Camera *camera = (Camera*) params;
+	while(1) {
+		camera->cap >> camera->frame;
+		pthread_cond_signal(&camera->frame_not_empty);
+		cout << "Grabbed" << endl;
+	}
+	return NULL;
+}
+
 Camera::Camera():cap(0) {
 	this->cap.set(CV_CAP_PROP_FRAME_WIDTH,640);
 	this->cap.set(CV_CAP_PROP_FRAME_HEIGHT,480);
@@ -35,8 +45,9 @@ Camera::Camera():cap(0) {
 //	cout << "Exposure: " << this->cap.get(CV_CAP_PROP_EXPOSURE) << endl;
 //	cout << "Convert RGB: " << this->cap.get(CV_CAP_PROP_CONVERT_RGB) << endl;
 //	cout << "Rectification: " << this->cap.get(CV_CAP_PROP_RECTIFICATION) << endl;
+	pthread_t grabber;
+	pthread_create(&grabber, NULL, frameGrabber, this);
 }
-
 
 int Camera::status() {
 	return this->cap.isOpened();
@@ -44,7 +55,8 @@ int Camera::status() {
 
 Mat Camera::takeSnapshot() {
     auto then = std::chrono::system_clock::now();
-	this->cap >> this->frame;
+//	this->cap >> this->frame;
+    pthread_cond_wait(&this->frame_not_empty, &this->frame_lock);
     cvtColor(this->frame, this->frame, CV_BGR2GRAY);
     Canny(this->frame, this->frame, 0, 30, 3);
     auto now = std::chrono::system_clock::now();

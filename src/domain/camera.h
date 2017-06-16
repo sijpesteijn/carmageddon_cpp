@@ -13,6 +13,7 @@
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/highgui.hpp"
 #include <iostream>
+#include <pthread.h>
 
 using namespace cv;
 using namespace std;
@@ -24,6 +25,9 @@ public:
 	Mat takeSnapshot();
 	VideoCapture cap;
 	Mat frame;
+	pthread_cond_t frame_not_empty = PTHREAD_COND_INITIALIZER;
+private:
+	pthread_mutex_t frame_lock = PTHREAD_MUTEX_INITIALIZER;
 };
 
 
