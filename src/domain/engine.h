@@ -13,8 +13,11 @@
 class Engine {
 public:
 	Engine();
+	int setThrottle(int throttle);
+	int getThrottle();
 private:
 	GPIO gpio;
+	int throttle = 0;
 };
 
 

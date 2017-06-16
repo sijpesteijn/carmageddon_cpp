@@ -13,8 +13,11 @@
 class Steer {
 public:
 	Steer();
+	int setAngle(int angle);
+	int getAngle();
 private:
 	GPIO gpio;
+	int angle = 0;
 };
 
 

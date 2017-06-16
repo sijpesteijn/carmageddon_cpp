@@ -18,10 +18,10 @@ using namespace std;
 class Car {
 public:
 	Car();
-	int moveLeft(int angle);
-	int moveRight(int angle);
-	int moveForward(int throttle);
-	int moveBack(int throttle);
+	int setAngle(int angle);
+	int getAngle();
+	int setThrottle(int throttle);
+	int getThrottle();
 	int stop();
 	string status();
 private:

@@ -11,3 +11,11 @@
 Engine::Engine():gpio(23) {
 }
 
+int Engine::setThrottle(int throttle) {
+	this->throttle = throttle;
+	return 0;
+}
+
+int Engine::getThrottle() {
+	return this->throttle;
+}
