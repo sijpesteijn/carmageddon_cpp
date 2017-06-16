@@ -22,8 +22,8 @@ public:
 	Camera();
 	int status();
 	Mat takeSnapshot();
-private:
 	VideoCapture cap;
+	Mat frame;
 };
 
 

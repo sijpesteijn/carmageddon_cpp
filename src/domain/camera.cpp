@@ -6,6 +6,17 @@
  */
 
 #include "camera.h"
+#include <pthread.h>
+
+mutex mtxCam;
+
+void* task(void* param) {
+	Camera *camera = (Camera *) param;
+	while (true)
+	{
+		camera->cap >> camera->frame;
+	}
+}
 
 Camera::Camera():cap(0) {
 	this->cap.set(CV_CAP_PROP_FRAME_WIDTH,640);
@@ -33,6 +44,8 @@ Camera::Camera():cap(0) {
 	cout << "Exposure: " << this->cap.get(CV_CAP_PROP_EXPOSURE) << endl;
 	cout << "Convert RGB: " << this->cap.get(CV_CAP_PROP_CONVERT_RGB) << endl;
 	cout << "Rectification: " << this->cap.get(CV_CAP_PROP_RECTIFICATION) << endl;
+	pthread_t t;
+	pthread_create(&t, NULL, task, (void *) this);
 }
 
 
@@ -41,12 +54,11 @@ int Camera::status() {
 }
 
 Mat Camera::takeSnapshot() {
-	Mat frame;
-	double count = cap.get(CV_CAP_PROP_FRAME_COUNT); //get the frame count
-	cap.set(CV_CAP_PROP_POS_FRAMES,count-1);
-	bool bSuccess = cap.read(frame);
-	if (!bSuccess) {
-		 cout << "Cannot read a frame from video stream" << endl;
-	}
-	return frame;
+//	double count = cap.get(CV_CAP_PROP_FRAME_COUNT); //get the frame count
+//	cap.set(CV_CAP_PROP_POS_FRAMES,count-1);
+//	bool bSuccess = cap.read(this->frame);
+//	if (!bSuccess) {
+//		 cout << "Cannot read a frame from video stream" << endl;
+//	}
+	return this->frame;
 }
