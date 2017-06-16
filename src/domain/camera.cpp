@@ -14,7 +14,7 @@ void* frameGrabber(void* params) {
 	while(1) {
 		camera->cap >> camera->frame;
 		pthread_cond_signal(&camera->frame_not_empty);
-		cout << "Grabbed" << endl;
+//		cout << "Grabbed" << endl;
 	}
 	return NULL;
 }
@@ -54,16 +54,18 @@ int Camera::status() {
 }
 
 Mat Camera::takeSnapshot() {
+	pthread_mutex_lock(&this->frame_lock);
     auto then = std::chrono::system_clock::now();
 //	this->cap >> this->frame;
-    pthread_cond_wait(&this->frame_not_empty, &this->frame_lock);
+//    pthread_cond_wait(&this->frame_not_empty, &this->frame_lock);
     cvtColor(this->frame, this->frame, CV_BGR2GRAY);
     Canny(this->frame, this->frame, 0, 30, 3);
+	pthread_mutex_unlock(&this->frame_lock);
     auto now = std::chrono::system_clock::now();
 	auto dur = now - then;
-	typedef std::chrono::duration<float> milliseconds;
-	auto secs = std::chrono::duration_cast<milliseconds>(dur);
-	cout << secs.count() << " millisec.\n";
+	typedef std::chrono::duration<float> microseconds;
+	auto secs = std::chrono::duration_cast<microseconds>(dur);
+	cout << secs.count() << " usec.\n";
 
 	return this->frame;
 }
