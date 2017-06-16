@@ -10,7 +10,7 @@
 Camera::Camera():cap(0) {
 	this->cap.set(CV_CAP_PROP_FRAME_WIDTH,640);
 	this->cap.set(CV_CAP_PROP_FRAME_HEIGHT,480);
-	this->cap.set(CV_CAP_PROP_BUFFERSIZE,1);
+	this->cap.set(CV_CAP_PROP_BUFFERSIZE,3);
 }
 
 
