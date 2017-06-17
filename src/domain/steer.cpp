@@ -8,7 +8,7 @@
 #include "steer.h"
 #include "gpio.h"
 
-Steer::Steer():gpio(22) {
+Steer::Steer():pwm(22) {
 }
 
 int Steer::setAngle(int angle) {

@@ -8,7 +8,7 @@
 #include "engine.h"
 #include "gpio.h"
 
-Engine::Engine():gpio(23) {
+Engine::Engine():pwm(23) {
 }
 
 int Engine::setThrottle(int throttle) {

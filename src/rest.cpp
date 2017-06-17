@@ -8,6 +8,7 @@
 #include <iostream>
 #include <fstream>
 #include "rest.h"
+#include "websocket_handler.h"
 #include "opencv2/core/utility.hpp"
 #include "opencv2/imgproc.hpp"
 #include "opencv2/imgcodecs.hpp"
@@ -104,6 +105,7 @@ void get_pic_test_handler( const shared_ptr< Session > session)
 Rest::Rest(Car *carP, Camera *cameraP) {
 	car = carP;
 	camera = cameraP;
+	websocket_handler handler;
     this->stopResource->set_path( "/car/stop" );
     this->stopResource->set_method_handler( "POST", post_stop_handler );
     this->carStatusResource->set_path( "/car/status" );
@@ -130,6 +132,7 @@ Rest::Rest(Car *carP, Camera *cameraP) {
     this->service.publish( this->carStatusResource );
     this->service.publish( this->steerResource );
     this->service.publish( this->engineResource );
+    this->service.publish( handler.getResource());
     this->service.start( settings );
 }
 

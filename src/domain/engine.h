@@ -8,7 +8,7 @@
 #ifndef SRC_DOMAIN_ENGINE_H_
 #define SRC_DOMAIN_ENGINE_H_
 
-#include "gpio.h"
+#include "pwm.h"
 
 class Engine {
 public:
@@ -16,7 +16,7 @@ public:
 	int setThrottle(int throttle);
 	int getThrottle();
 private:
-	GPIO gpio;
+	PWM pwm;
 	int throttle = 0;
 };
 

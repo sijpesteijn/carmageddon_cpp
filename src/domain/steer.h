@@ -8,7 +8,7 @@
 #ifndef SRC_DOMAIN_STEER_H_
 #define SRC_DOMAIN_STEER_H_
 
-#include "gpio.h"
+#include "pwm.h"
 
 class Steer {
 public:
@@ -16,7 +16,7 @@ public:
 	int setAngle(int angle);
 	int getAngle();
 private:
-	GPIO gpio;
+	PWM pwm;
 	int angle = 0;
 };
 
