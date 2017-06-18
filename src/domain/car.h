@@ -14,6 +14,7 @@
 #include "engine.h"
 
 using namespace std;
+enum class car_status { ready = 1, stopped = 0 };
 
 class Car {
 public:
@@ -23,10 +24,12 @@ public:
 	int setThrottle(int throttle);
 	int getThrottle();
 	int stop();
-	string status();
+	car_status getStatus();
+	void setStatus(car_status);
 private:
 	Steer steer;
 	Engine engine;
+	car_status status;
 };
 
 

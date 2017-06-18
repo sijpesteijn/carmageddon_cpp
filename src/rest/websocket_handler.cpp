@@ -166,7 +166,6 @@ void get_method_handler( const shared_ptr< Session > session )
 
             session->upgrade( SWITCHING_PROTOCOLS, headers, [ ]( const shared_ptr< WebSocket > socket )
             {
-            	cout << "Bla" << endl;
                 if ( socket->is_open( ) )
                 {
                     socket->set_close_handler( close_handler );

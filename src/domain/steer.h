@@ -15,6 +15,7 @@ public:
 	Steer();
 	int setAngle(int angle);
 	int getAngle();
+	void setEnable(int enable);
 private:
 	PWM pwm;
 	int angle = 0;

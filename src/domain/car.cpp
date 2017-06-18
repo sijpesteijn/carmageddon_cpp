@@ -11,10 +11,15 @@
 using namespace std;
 
 Car::Car() {
+	this->status = car_status::stopped;
 }
 
-string Car::status() {
-	return string("Okido");
+car_status Car::getStatus() {
+	return this->status;
+}
+
+void Car::setStatus(car_status status) {
+	this->status = status;
 }
 
 int Car::setAngle(int angle) {
