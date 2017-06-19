@@ -26,11 +26,6 @@ public:
 	VideoCapture cap;
 	Mat frame;
 	pthread_cond_t frame_not_empty = PTHREAD_COND_INITIALIZER;
-private:
-	pthread_mutex_t frame_lock = PTHREAD_MUTEX_INITIALIZER;
 };
-
-
-
 
 #endif /* SRC_DOMAIN_CAMERA_H_ */

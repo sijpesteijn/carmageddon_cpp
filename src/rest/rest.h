@@ -10,8 +10,8 @@
 
 #include <memory>
 #include <restbed>
-#include "./camera_resource.h"
-#include "./car_resource.h"
+#include "camera_resource.h"
+#include "car_resource.h"
 #include "websocket_handler.h"
 
 using namespace restbed;

@@ -9,11 +9,19 @@
 #include <chrono>
 #include <pthread.h>
 
+pthread_mutex_t frame_lock = PTHREAD_MUTEX_INITIALIZER;
+
 void* frameGrabber(void* params) {
 	Camera *camera = (Camera*) params;
 	while(1) {
+		if (pthread_mutex_lock(&frame_lock) != 0) {
+			cout << "Sockethandler: Could not get a lock on the queue" << endl;
+		}
 		camera->cap >> camera->frame;
 		pthread_cond_signal(&camera->frame_not_empty);
+		if (pthread_mutex_unlock(&frame_lock) != 0) {
+			cout << "Sockethandler: Could not unlock the queue" << endl;
+		}
 //		cout << "Grabbed" << endl;
 	}
 	return NULL;
@@ -54,13 +62,17 @@ int Camera::status() {
 }
 
 Mat Camera::takeSnapshot() {
-	pthread_mutex_lock(&this->frame_lock);
+	if (pthread_mutex_lock(&frame_lock) != 0) {
+		cout << "Sockethandler: Could not get a lock on the queue" << endl;
+	}
     auto then = std::chrono::system_clock::now();
 //	this->cap >> this->frame;
 //    pthread_cond_wait(&this->frame_not_empty, &this->frame_lock);
     cvtColor(this->frame, this->frame, CV_BGR2GRAY);
     Canny(this->frame, this->frame, 0, 30, 3);
-	pthread_mutex_unlock(&this->frame_lock);
+	if (pthread_mutex_unlock(&frame_lock) != 0) {
+		cout << "Sockethandler: Could not unlock the queue" << endl;
+	}
     auto now = std::chrono::system_clock::now();
 	auto dur = now - then;
 	typedef std::chrono::duration<float> microseconds;

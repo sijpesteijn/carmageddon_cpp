@@ -23,7 +23,9 @@ void Car::setStatus(car_status status) {
 }
 
 int Car::setAngle(int angle) {
-	this->steer.setAngle(angle);
+	if (this->status != car_status::stopped) {
+		this->steer.setAngle(angle);
+	}
 	return 0;
 }
 
@@ -32,16 +34,16 @@ int Car::getAngle() {
 }
 
 int Car::setThrottle(int throttle) {
-	this->engine.setThrottle(throttle);
+	if (this->status != car_status::stopped) {
+		this->engine.setThrottle(throttle);
+	}
 	return 0;
 }
 
 int Car::getThrottle() {
-	this->engine.getThrottle();
-	return 0;
+	return this->engine.getThrottle();
 }
 
 int Car::stop() {
 	return 0;
 }
-

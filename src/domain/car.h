@@ -14,7 +14,7 @@
 #include "engine.h"
 
 using namespace std;
-enum class car_status { ready = 1, stopped = 0 };
+enum class car_status { ready = 1, stopped = 0, num_values };
 
 class Car {
 public:
