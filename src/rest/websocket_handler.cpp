@@ -26,6 +26,8 @@ using namespace std;
 using namespace restbed;
 using namespace std::chrono;
 
+Car *car;
+pthread_mutex_t checker_lock = PTHREAD_MUTEX_INITIALIZER;
 shared_ptr< Service > service = nullptr;
 
 map< string, shared_ptr< WebSocket > > sockets = { };
@@ -176,6 +178,7 @@ void get_method_handler( const shared_ptr< Session > session )
                     {
                         const auto key = socket->get_key( );
                         sockets.insert( make_pair( key, socket ) );
+                        car->setEnabled(1);
 
                         fprintf( stderr, "Sent welcome message to %s.\n", key.data( ) );
                     } );
@@ -193,11 +196,31 @@ void get_method_handler( const shared_ptr< Session > session )
     session->close( BAD_REQUEST );
 }
 
+void* connectionChecker(void* params) {
+	Car *car = (Car*) params;
+	while(1) {
+		if (pthread_mutex_lock(&checker_lock) != 0) {
+			cout << "Sockethandler: Could not get a lock on the queue" << endl;
+		}
+		if (car->getEnabled() != 0 && sockets.size() == 0) {
+			cout << "No connections car stopped" << endl;
+//			car->setEnabled(0);
+		}
+		if (pthread_mutex_unlock(&checker_lock) != 0) {
+			cout << "Sockethandler: Could not unlock the queue" << endl;
+		}
+	}
+	return NULL;
+}
 
-websocket_handler::websocket_handler() {
+websocket_handler::websocket_handler(Car *carP) {
+//	car = carP;
 	this->resource = make_shared< Resource >( );
 	this->resource->set_path( "/chat" );
 	this->resource->set_method_handler( "GET", get_method_handler );
+	pthread_t checker;
+	pthread_create(&checker, NULL, connectionChecker, car);
+
 }
 
 shared_ptr<Resource> websocket_handler::getResource() {

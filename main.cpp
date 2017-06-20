@@ -11,7 +11,7 @@ int main( const int, const char** )
 	Camera camera;
 	camera_resource camera_res(&camera);
 	car_resource car_res(&car);
-	websocket_handler handler;
+	websocket_handler handler(&car);
 	Rest rest(&car_res, &camera_res, &handler);
     return EXIT_SUCCESS;
 }

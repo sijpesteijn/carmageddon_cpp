@@ -23,13 +23,15 @@ public:
 	int getAngle();
 	int setThrottle(int throttle);
 	int getThrottle();
-	int stop();
+	int getEnabled();
+	void setEnabled(int enable);
 	car_status getStatus();
 	void setStatus(car_status);
 private:
 	Steer steer;
 	Engine engine;
-	car_status status;
+	car_status status = car_status::stopped;
+	int enabled = 0;
 };
 
 

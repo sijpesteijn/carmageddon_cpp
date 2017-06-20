@@ -44,6 +44,12 @@ int Car::getThrottle() {
 	return this->engine.getThrottle();
 }
 
-int Car::stop() {
-	return 0;
+int Car::getEnabled() {
+	return this->enabled;
+}
+
+void Car::setEnabled(int enabled) {
+	this->enabled = enabled;
+	this->steer.setEnable(this->enabled);
+	this->engine.setEnable(this->enabled);
 }

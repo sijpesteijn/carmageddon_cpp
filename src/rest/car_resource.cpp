@@ -17,7 +17,7 @@ using namespace std;
 
 static Car *car;
 void post_stop_handler(const shared_ptr<Session> session) {
-	car->stop();
+	car->setEnabled(0);
 	const string body = "Car stopped.";
 	session->close(OK, body,
 			{
