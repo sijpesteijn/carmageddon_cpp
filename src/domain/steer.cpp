@@ -14,16 +14,19 @@ Steer::Steer():pwm("P9.22") {
 }
 
 int Steer::setAngle(int angle) {
-	this->angle = angle;
-	if (this->angle < -40) {
-		this->angle = -40;
+	if (this->pwm.getEnabled() == 1) {
+		this->angle = angle;
+		if (this->angle < -40) {
+			this->angle = -40;
+		}
+		if (this->angle > 40) {
+			this->angle = 40;
+		}
+		int duty_cycle = DUTY_MIDDLE + (this->angle * ONE_DEGREE);
+		this->pwm.setDutyCycle(duty_cycle);
+		return 0;
 	}
-	if (this->angle > 40) {
-		this->angle = 40;
-	}
-	int duty_cycle = DUTY_MIDDLE + (this->angle * ONE_DEGREE);
-	this->pwm.setDutyCycle(duty_cycle);
-	return 0;
+	return 1;
 }
 
 int Steer::getAngle() {

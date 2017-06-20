@@ -16,6 +16,7 @@ public:
 	int setAngle(int angle);
 	int getAngle();
 	void setEnable(int enable);
+	int getEnabled();
 private:
 	PWM pwm;
 	int angle = 0;

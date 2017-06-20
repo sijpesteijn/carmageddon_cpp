@@ -19,6 +19,7 @@ public:
 	void setPeriod(int period);
 	void setDutyCycle(int duty_cycle);
 	void setEnable(int enable);
+	int getEnabled();
 private:
 	string pwmNr;
 	int enable = 0;

@@ -52,3 +52,7 @@ void PWM::setEnable(int enable) {
 	system(cmd.c_str());
 	cout << "Enable set to " << this->enable << endl;
 }
+
+int PWM::getEnabled() {
+	return this->enable;
+}

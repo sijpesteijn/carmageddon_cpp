@@ -14,16 +14,20 @@ Engine::Engine():pwm("P9.21") {
 }
 
 int Engine::setThrottle(int throttle) {
-	this->throttle = throttle;
-	if (this->throttle < -120) {
-		this->throttle = -120;
+	if (this->pwm.getEnabled() == 1) {
+		this->throttle = throttle;
+		if (this->throttle < -120) {
+			this->throttle = -120;
+		}
+		if (this->throttle >120) {
+			this->throttle = 120;
+		}
+		int duty_cycle = DUTY_MIDDLE + (this->throttle * SPEED_STEP);
+		this->pwm.setDutyCycle(duty_cycle);
+		return 0;
+	} else {
+		return 1;
 	}
-	if (this->throttle >120) {
-		this->throttle = 120;
-	}
-	int duty_cycle = DUTY_MIDDLE + (this->throttle * SPEED_STEP);
-	this->pwm.setDutyCycle(duty_cycle);
-	return 0;
 }
 
 int Engine::getThrottle() {

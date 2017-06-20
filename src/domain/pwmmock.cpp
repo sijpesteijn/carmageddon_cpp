@@ -36,3 +36,6 @@ void PWM::setEnable(int enable) {
 	cout << "Enable set to " << this->enable << endl;
 }
 
+int PWM::getEnabled() {
+	return this->enable;
+}
