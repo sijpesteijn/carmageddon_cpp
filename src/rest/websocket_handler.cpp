@@ -204,7 +204,7 @@ void* connectionChecker(void* params) {
 		}
 		if (car->getEnabled() != 0 && sockets.size() == 0) {
 			cout << "No connections car stopped" << endl;
-//			car->setEnabled(0);
+			car->setEnabled(0);
 		}
 		if (pthread_mutex_unlock(&checker_lock) != 0) {
 			cout << "Sockethandler: Could not unlock the queue" << endl;
@@ -214,7 +214,7 @@ void* connectionChecker(void* params) {
 }
 
 websocket_handler::websocket_handler(Car *carP) {
-//	car = carP;
+	car = carP;
 	this->resource = make_shared< Resource >( );
 	this->resource->set_path( "/chat" );
 	this->resource->set_method_handler( "GET", get_method_handler );
