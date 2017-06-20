@@ -26,7 +26,7 @@ using namespace std;
 using namespace restbed;
 using namespace std::chrono;
 
-//Car *car;
+Car *car;
 pthread_mutex_t checker_lock = PTHREAD_MUTEX_INITIALIZER;
 shared_ptr< Service > service = nullptr;
 
@@ -214,7 +214,7 @@ void* connectionChecker(void* params) {
 }
 
 websocket_handler::websocket_handler(Car *carP) {
-//	car = carP;
+	car = carP;
 	this->resource = make_shared< Resource >( );
 	this->resource->set_path( "/chat" );
 	this->resource->set_method_handler( "GET", get_method_handler );
