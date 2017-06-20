@@ -178,7 +178,7 @@ void get_method_handler( const shared_ptr< Session > session )
                     {
                         const auto key = socket->get_key( );
                         sockets.insert( make_pair( key, socket ) );
-//                        car->setEnabled(1);
+                        car->setEnabled(1);
 
                         fprintf( stderr, "Sent welcome message to %s.\n", key.data( ) );
                     } );
