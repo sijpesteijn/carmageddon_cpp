@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html ng-app="carmageddon">
+<head>
+    <title>Carmageddon</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src='./js/virtualjoystick.js'></script>
+    <script src='./js/angular.min.js'></script>
+    <script src='./js/angular-resource.min.js'></script>
+    <script src='./js/angular-route.min.js'></script>
+    <script src='./js/angular-cookies.min.js'></script>
+    <script src='./js/angular-websocket.js'></script>
+    <script src='./js/angular-sanitize.min.js'></script>
+    <script src='./js/tinycolor-min.js'></script>
+    <script src='./js/angularjs-color-picker.min.js'></script>
+
+    <link rel="stylesheet" href="./css/carmageddon.css"/>
+    <link rel="stylesheet" href="./css/angularjs-color-picker.min.css"/>
+</head>
+<body>
+<header>
+    <lifeline></lifeline>
+    <car-status></car-status>
+</header>
+
+<div class="workarea">
+    <panic-button></panic-button>
+    <div class="car-disabled" ng-if="carMode == 'disabled'">De auto is uitgeschakeld.</div>
+    <touchpad ng-if="carMode == 'manual'"></touchpad>
+    <autonomous ng-if="carMode == 'autonomous'"></autonomous>
+</div>
+<stream></stream>
+
+<script src='./scripts/app.js'></script>
+<script src='./scripts/directives/settings/settings.js'></script>
+<script src='./scripts/directives/stream/stream.js'></script>
+<script src='./scripts/directives/autonomous/autonomous.js'></script>
+<script src='./scripts/directives/carStatus/carStatus.js'></script>
+<script src='./scripts/directives/panicButton/panicButton.js'></script>
+<script src='./scripts/directives/lifeline/lifeline.js'></script>
+<script src='./scripts/directives/touchpad/touchpad.js'></script>
+</body>
+</html>

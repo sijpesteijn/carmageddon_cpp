@@ -118,6 +118,7 @@ void message_handler( const shared_ptr< WebSocket > source, const shared_ptr< We
     }
     else if ( opcode == WebSocketMessage::PONG_FRAME )
     {
+    	cout << "PONG" << endl;
         //Ignore PONG_FRAME.
         //
         //Every time the ping_handler is scheduled to run, it fires off a PING_FRAME to each
