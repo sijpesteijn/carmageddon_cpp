@@ -27,50 +27,12 @@ void get_camera_status_handler( const shared_ptr< Session > session)
 	session->close( OK, body, { { "Content-Length", ::to_string( body.size( ) ) } } );
 }
 
-stringstream serialize(Mat input)
-{
-    // We will need to also serialize the width, height, type and size of the matrix
-    int width = input.cols;
-    int height = input.rows;
-    int type = input.type();
-    size_t size = input.total() * input.elemSize();
-
-    // Initialize a stringstream and write the data
-    stringstream ss;
-    ss.write((char*)(&width), sizeof(int));
-    ss.write((char*)(&height), sizeof(int));
-    ss.write((char*)(&type), sizeof(int));
-    ss.write((char*)(&size), sizeof(size_t));
-
-    // Write the whole image data
-    ss.write((char*)input.data, size);
-
-    return ss;
-}
-
 void get_camera_snapshot_handler( const shared_ptr< Session > session)
 {
 	Mat snapshot = camera->takeSnapshot();
-//	 stringstream serializedStream = serialize(snapshot);
-
-	    // Base64 encode the stringstream
-//	    string encoded;
-//	    string stream = serializedStream.str();
-//	 encoded = base64_encode(&stream, stream.length());
 	imwrite("bla.jpg", snapshot);
-//	snapshot = (snapshot.reshape(0,1)); // to make it continuous
-//	int  imgSize = snapshot.total()*snapshot.elemSize();
-//	const string body = string(reinterpret_cast<char*>(snapshot.data));
 	ifstream stream("bla.jpg", ios::in | ios::binary);
 	const string body = string( istreambuf_iterator< char >( stream ), istreambuf_iterator< char >( ) );
-//	Size size = snapshot.size();
-
-//	const string body = "";
-//	  int total = size.width * size.height * snapshot.channels();
-//	  std::cout << "Mat size = " << body << std::endl;
-
-//	  std::vector<uchar> data(snapshot.ptr(), snapshot.ptr() + total);
-//	  std::string body(data.begin(), data.end());
 	const multimap< string, string > headers
 	{
 		{ "Content-Type", "image/jpeg" },
