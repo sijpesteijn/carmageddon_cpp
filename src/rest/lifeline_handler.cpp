@@ -5,7 +5,6 @@
  *      Author: gijs
  */
 
-#include "websocket_handler.h"
 #include <map>
 #include <iostream>
 #include <chrono>
@@ -21,6 +20,7 @@
 #include <openssl/evp.h>
 #include <openssl/bio.h>
 #include <openssl/buffer.h>
+#include "lifeline_handler.h"
 
 using namespace std;
 using namespace restbed;

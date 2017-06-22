@@ -19,15 +19,12 @@ app.run(function ($rootScope) {
 
 app.factory('websocketFactory', function ($websocket, $location, $interval) {
 
-    function websocket(ep) {
+    function websocket() {
         var connection = null;
         var connected = false;
         var pinger;
-        var endpoint;
 
-        endpoint = ep;
-        var splits = $location.absUrl().split('/');
-        var url = 'ws://' + splits[2] + '/' + splits[3] + '/' + endpoint;
+        var url = 'ws://192.168.7.2:1984/chat';
 
         this.connect = function() {
             try {

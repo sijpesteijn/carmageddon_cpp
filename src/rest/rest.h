@@ -12,7 +12,7 @@
 #include <restbed>
 #include "camera_resource.h"
 #include "car_resource.h"
-#include "websocket_handler.h"
+#include "lifeline_handler.h"
 
 using namespace restbed;
 using namespace std;

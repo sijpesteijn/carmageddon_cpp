@@ -1,8 +1,8 @@
-#include "src/domain/camera.h"
-#include "src/domain/car.h"
-#include "src/rest/rest.h"
-#include "src/rest/camera_resource.h"
-#include "src/rest/car_resource.h"
+#include "domain/camera.h"
+#include "domain/car.h"
+#include "rest/rest.h"
+#include "rest/camera_resource.h"
+#include "rest/car_resource.h"
 
 int main( const int, const char** )
 {

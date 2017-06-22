@@ -7,7 +7,7 @@
 
     function lifelineController($scope, websocketFactory) {
         $scope.heartbeat = false;
-        var websocket = websocketFactory.create('lifeline');
+        var websocket = websocketFactory.create();
 
         websocket.onMessage(function(message) {
             $scope.heartbeat = !$scope.heartbeat;

@@ -8,11 +8,11 @@
 #include <iostream>
 #include <fstream>
 #include "rest.h"
-#include "websocket_handler.h"
 #include "opencv2/core/utility.hpp"
 #include "opencv2/imgproc.hpp"
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/highgui.hpp"
+#include "lifeline_handler.h"
 
 using namespace cv;
 using namespace std;
