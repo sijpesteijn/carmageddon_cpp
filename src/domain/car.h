@@ -14,7 +14,7 @@
 #include "engine.h"
 
 using namespace std;
-enum class car_status { ready = 1, stopped = 0, num_values };
+enum class car_mode { stopped = 0, manual = 1, autonomous = 2, num_values };
 
 class Car {
 public:
@@ -25,12 +25,12 @@ public:
 	int getThrottle();
 	int getEnabled();
 	void setEnabled(int enable);
-	car_status getStatus();
-	void setStatus(car_status);
+	car_mode getMode();
+	void setMode(car_mode);
 private:
 	Steer steer;
 	Engine engine;
-	car_status status = car_status::stopped;
+	car_mode mode = car_mode::manual;
 	int enabled = 0;
 };
 

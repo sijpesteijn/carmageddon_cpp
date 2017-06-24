@@ -20,7 +20,7 @@
 #include <openssl/evp.h>
 #include <openssl/bio.h>
 #include <openssl/buffer.h>
-#include "lifeline_handler.h"
+#include "carstatus_handler.h"
 #include "../util/util.h"
 
 using namespace std;
@@ -30,10 +30,10 @@ using namespace std::chrono;
 static Car *car;
 static pthread_mutex_t checker_lock = PTHREAD_MUTEX_INITIALIZER;
 static shared_ptr< Service > service = nullptr;
+
 static map< string, shared_ptr< WebSocket > > sockets = { };
 
-
-void lifeline_close_handler( const shared_ptr< WebSocket > socket )
+void carstatus_close_handler( const shared_ptr< WebSocket > socket )
 {
     if ( socket->is_open( ) )
     {
@@ -47,13 +47,13 @@ void lifeline_close_handler( const shared_ptr< WebSocket > socket )
     fprintf( stderr, "Closed connection to %s.\n", key.data( ) );
 }
 
-void lifeline_error_handler( const shared_ptr< WebSocket > socket, const error_code error )
+void carstatus_error_handler( const shared_ptr< WebSocket > socket, const error_code error )
 {
     const auto key = socket->get_key( );
     fprintf( stderr, "WebSocket Errored '%s' for %s.\n", error.message( ).data( ), key.data( ) );
 }
 
-void lifeline_message_handler( const shared_ptr< WebSocket > source, const shared_ptr< WebSocketMessage > message )
+void carstatus_message_handler( const shared_ptr< WebSocket > source, const shared_ptr< WebSocketMessage > message )
 {
     const auto opcode = message->get_opcode( );
 
@@ -102,7 +102,7 @@ void lifeline_message_handler( const shared_ptr< WebSocket > source, const share
     }
 }
 
-void get_lifeline_method_handler( const shared_ptr< Session > session )
+void get_carstatus_method_handler( const shared_ptr< Session > session )
 {
     const auto request = session->get_request( );
     const auto connection_header = request->get_header( "connection", String::lowercase );
@@ -117,9 +117,9 @@ void get_lifeline_method_handler( const shared_ptr< Session > session )
             {
                 if ( socket->is_open( ) )
                 {
-                    socket->set_close_handler( lifeline_close_handler );
-                    socket->set_error_handler( lifeline_error_handler );
-                    socket->set_message_handler( lifeline_message_handler );
+                    socket->set_close_handler( carstatus_close_handler );
+                    socket->set_error_handler( carstatus_error_handler );
+                    socket->set_message_handler( carstatus_message_handler );
 
                     socket->send( "Welcome to Corvusoft Chat!", [ ]( const shared_ptr< WebSocket > socket )
                     {
@@ -143,7 +143,7 @@ void get_lifeline_method_handler( const shared_ptr< Session > session )
     session->close( BAD_REQUEST );
 }
 
-void* connectionChecker(void* params) {
+void* carstatus_connectionChecker(void* params) {
 	Car *car = (Car*) params;
 	while(1) {
 		if (pthread_mutex_lock(&checker_lock) != 0) {
@@ -160,16 +160,16 @@ void* connectionChecker(void* params) {
 	return NULL;
 }
 
-lifeline_handler::lifeline_handler(Car *carP) {
+carstatus_handler::carstatus_handler(Car *carP) {
 	car = carP;
 	this->resource = make_shared< Resource >( );
-	this->resource->set_path( "/lifeline" );
-	this->resource->set_method_handler( "GET", get_lifeline_method_handler );
+	this->resource->set_path( "/car_status" );
+	this->resource->set_method_handler( "GET", get_carstatus_method_handler );
 	pthread_t checker;
-	pthread_create(&checker, NULL, connectionChecker, carP);
+	pthread_create(&checker, NULL, carstatus_connectionChecker, carP);
 }
 
-shared_ptr<Resource> lifeline_handler::getResource() {
+shared_ptr<Resource> carstatus_handler::getResource() {
 	return this->resource;
 }
 

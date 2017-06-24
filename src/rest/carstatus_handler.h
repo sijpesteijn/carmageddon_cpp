@@ -5,8 +5,8 @@
  *      Author: gijs
  */
 
-#ifndef SRC_LIFELINE_HANDLER_H_
-#define SRC_LIFELINE_HANDLER_H_
+#ifndef SRC_CARSTATUS_HANDLER_H_
+#define SRC_CARSTATUS_HANDLER_H_
 
 #include <restbed>
 #include "../domain/car.h"
@@ -14,9 +14,9 @@
 using namespace restbed;
 using namespace std;
 
-class lifeline_handler {
+class carstatus_handler {
 public:
-	lifeline_handler(Car *car);
+	carstatus_handler(Car *car);
 	shared_ptr<Resource> getResource();
 private:
 	shared_ptr<Resource> resource;
@@ -24,4 +24,4 @@ private:
 
 
 
-#endif /* SRC_LIFELINE_HANDLER_H_ */
+#endif /* SRC_CARSTATUS_HANDLER_H_ */

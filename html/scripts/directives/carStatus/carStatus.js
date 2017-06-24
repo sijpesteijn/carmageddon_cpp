@@ -7,28 +7,28 @@
 
     function carStatusController($rootScope, $scope, $resource, websocketFactory) {
         $scope.connected = false;
-        $scope.car;
+        $scope.car = {};
         $rootScope.carMode;
-        $scope.modes = ['disabled','manual','autonomous'];
+        $scope.modes = ['stopped','manual','autonomous'];
 
-        var websocket = websocketFactory.create();
+        var websocket = websocketFactory.create('car_status');
 
-        websocket.onMessage(function (message) {
-            if (message.data !== 'pong') {
-                console.log("Car: " + message.data);
-                $scope.car = angular.fromJson(message.data);
-                $rootScope.carMode = $scope.car.mode;
-            }
-        });
+        // websocket.onMessage(function (message) {
+        //     if (message.data !== 'pong') {
+        //         console.log("Car: " + message.data);
+        //         $scope.car = angular.fromJson(message.data);
+        //         $rootScope.carMode = $scope.car.mode;
+        //     }
+        // });
 
         $scope.updateCarMode = function(carMode) {
             $scope.car.mode = carMode;
             $rootScope.carMode = $scope.car.mode;
-            $resource('./rest/car/mode/:mode').save({
+            $resource($rootScope.hostName + 'car/mode/:mode').save({
                     mode: $scope.car.mode
                 }, {},
                 function (success) {
-                    // console.debug('mode send', success);
+                    console.debug('mode send', success);
                 },
                 function (error) {
                     console.error('mode update failed', error);

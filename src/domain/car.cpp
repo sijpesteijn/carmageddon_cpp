@@ -11,19 +11,19 @@
 using namespace std;
 
 Car::Car() {
-	this->status = car_status::stopped;
+	this->mode = car_mode::stopped;
 }
 
-car_status Car::getStatus() {
-	return this->status;
+car_mode Car::getMode() {
+	return this->mode;
 }
 
-void Car::setStatus(car_status status) {
-	this->status = status;
+void Car::setMode(car_mode status) {
+	this->mode = status;
 }
 
 int Car::setAngle(int angle) {
-	if (this->status != car_status::stopped) {
+	if (this->mode != car_mode::stopped) {
 		this->steer.setAngle(angle);
 	}
 	return 0;
@@ -34,7 +34,7 @@ int Car::getAngle() {
 }
 
 int Car::setThrottle(int throttle) {
-	if (this->status != car_status::stopped) {
+	if (this->mode != car_mode::stopped) {
 		this->engine.setThrottle(throttle);
 	}
 	return 0;
@@ -49,6 +49,7 @@ int Car::getEnabled() {
 }
 
 void Car::setEnabled(int enabled) {
+	cout << "Enabled: " << enabled << endl;
 	this->enabled = enabled;
 	this->steer.setEnable(this->enabled);
 	this->engine.setEnable(this->enabled);

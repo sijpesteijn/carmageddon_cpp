@@ -8,7 +8,6 @@
 #include "camera_resource.h"
 #include <iostream>
 #include <fstream>
-#include "../util/base64.h"
 #include "rest.h"
 #include "opencv2/core/utility.hpp"
 #include "opencv2/imgproc.hpp"

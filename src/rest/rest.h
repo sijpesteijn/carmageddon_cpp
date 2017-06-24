@@ -13,13 +13,17 @@
 #include "camera_resource.h"
 #include "car_resource.h"
 #include "lifeline_handler.h"
+#include "carstatus_handler.h"
 
 using namespace restbed;
 using namespace std;
 
 class Rest {
 public:
-	Rest(car_resource *car_res, camera_resource *camera_res, websocket_handler *handler);
+	Rest(car_resource *car_res,
+			camera_resource *camera_res,
+			lifeline_handler *lifeline_handler,
+			carstatus_handler *carstatus_handler);
 private:
     Service service;
 };

@@ -10,7 +10,8 @@ var app = angular.module('carmageddon', [
 ]);
 
 app.run(function ($rootScope) {
-    $rootScope.carMode = 'disabled';
+    $rootScope.carMode = 'stopped';
+    $rootScope.hostName = 'http://carmageddon.dev/'
     // $rootScope.settings = {
     //     throttleLimit: 40
     // }
@@ -19,12 +20,12 @@ app.run(function ($rootScope) {
 
 app.factory('websocketFactory', function ($websocket, $location, $interval) {
 
-    function websocket() {
+    function websocket(endpoint) {
         var connection = null;
         var connected = false;
         var pinger;
 
-        var url = 'ws://192.168.7.2:1984/chat';
+        var url = 'ws://carmageddon.dev/' + endpoint;
 
         this.connect = function() {
             try {

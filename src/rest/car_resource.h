@@ -20,8 +20,8 @@ public:
 	car_resource(Car *car);
 	list<shared_ptr<Resource>> getResources();
 private:
-	shared_ptr<Resource> carGetStatusResource = make_shared< Resource >( );
-	shared_ptr<Resource> carPostStatusResource = make_shared< Resource >( );
+	shared_ptr<Resource> carGetModeResource = make_shared< Resource >( );
+	shared_ptr<Resource> carPostModeResource = make_shared< Resource >( );
 	shared_ptr<Resource> stopResource = make_shared< Resource >( );
 	shared_ptr<Resource> steerResource = make_shared< Resource >( );
 	shared_ptr<Resource> engineResource = make_shared< Resource >( );
