@@ -7,6 +7,7 @@
 
 #include "engine.h"
 #include "gpio.h"
+#include <syslog.h>
 #define DUTY_MIDDLE 1480000
 #define SPEED_STEP 2500
 
@@ -35,5 +36,6 @@ int Engine::getThrottle() {
 }
 
 void Engine::setEnable(int enable) {
+	syslog(LOG_DEBUG, "Engine enable: %d", enable);
 	this->pwm.setEnable(enable);
 }

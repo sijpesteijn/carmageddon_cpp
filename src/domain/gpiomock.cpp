@@ -5,18 +5,16 @@
  *      Author: gijs
  */
 
-#include <iostream>
+#include <syslog.h>
 #include "gpio.h"
-
-using namespace std;
 
 GPIO::GPIO(int gpioNr) {
 	this->gpioNr = gpioNr;
-	cout << "GPIO mack started" << endl;
+	syslog(LOG_DEBUG, "%s", "GPIO mack started");
 }
 
 int GPIO::open() {
-	cout << "Open " << this->gpioNr << endl;
+	syslog(LOG_DEBUG, "Open %d", this->gpioNr);
 	return 1;
 }
 

@@ -12,11 +12,9 @@
 #include "opencv2/imgproc.hpp"
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/highgui.hpp"
-#include <iostream>
 #include <pthread.h>
 
 using namespace cv;
-using namespace std;
 
 class Camera {
 public:

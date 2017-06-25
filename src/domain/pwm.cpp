@@ -7,13 +7,11 @@
 
 
 #include "pwm.h"
+#include <syslog.h>
 #include <string>
 #include <map>
 #include <stdio.h>
 #include <stdlib.h>
-#include <iostream>
-
-using namespace std;
 
 map<string, string> pwmMap = {
 	{ "P9.21", "/sys/class/pwm/pwmchip0/pwm1/"},
@@ -36,7 +34,7 @@ void PWM::setPeriod(int period) {
 	this->period = period;
 	string cmd = "echo " + to_string(this->period) + " > " + this->pwmNr + "period";
 	system(cmd.c_str());
-	cout << "PWM(" << this->pwmNr << ") Period set to " << this->period << endl;
+	syslog(LOG_DEBUG, "PWM(%d) Period set to &d", this->pwmNr, this->period);
 }
 
 void PWM::setDutyCycle(int duty_cycle) {

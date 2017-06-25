@@ -1,3 +1,5 @@
+#include <syslog.h>
+
 #include "domain/camera.h"
 #include "domain/car.h"
 #include "rest/rest.h"
@@ -8,6 +10,9 @@
 
 int main( const int, const char** )
 {
+	openlog ("Carmageddon", LOG_PID | LOG_CONS | LOG_NDELAY | LOG_NOWAIT, LOG_LOCAL0);
+	syslog (LOG_INFO, "%s", "Starting Carmageddon");
+
 	Car car;
 	Camera camera;
 	camera_resource camera_res(&camera);

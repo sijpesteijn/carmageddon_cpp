@@ -7,9 +7,7 @@
 
 
 #include "pwm.h"
-#include <iostream>
-
-using namespace std;
+#include <syslog.h>
 
 PWM::PWM(string pwmNr) {
 	this->pwmNr = pwmNr;
@@ -23,17 +21,17 @@ PWM::PWM(string pwmNr, int period, int duty_cycle) {
 
 void PWM::setPeriod(int period) {
 	this->period = period;
-	cout << "Period set to " << this->period << endl;
+	syslog(LOG_DEBUG, "Period set to %d", this->period);
 }
 
 void PWM::setDutyCycle(int duty_cycle) {
 	this->duty_cycle = duty_cycle;
-	cout << "Duty cycle set to " << this->duty_cycle << endl;
+	syslog(LOG_DEBUG, "Duty cycle set to %d", this->duty_cycle);
 }
 
 void PWM::setEnable(int enable) {
 	this->enable = enable;
-	cout << "Enable set to " << this->enable << endl;
+	syslog(LOG_DEBUG, "Enable set to %d", this->enable);
 }
 
 int PWM::getEnabled() {

@@ -8,12 +8,10 @@
 #ifndef SRC_DOMAIN_CAR_H_
 #define SRC_DOMAIN_CAR_H_
 
-#include <iostream>
 
 #include "steer.h"
 #include "engine.h"
 
-using namespace std;
 enum class car_mode { stopped = 0, manual = 1, autonomous = 2, num_values };
 
 class Car {

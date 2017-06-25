@@ -5,10 +5,9 @@
  *      Author: gijs
  */
 
-#include <iostream>
 #include "car.h"
+#include <syslog.h>
 
-using namespace std;
 
 Car::Car() {
 	this->mode = car_mode::stopped;
@@ -49,7 +48,7 @@ int Car::getEnabled() {
 }
 
 void Car::setEnabled(int enabled) {
-	cout << "Enabled: " << enabled << endl;
+	syslog(LOG_DEBUG, "Enabled: %d", enabled);
 	this->enabled = enabled;
 	this->steer.setEnable(this->enabled);
 	this->engine.setEnable(this->enabled);
