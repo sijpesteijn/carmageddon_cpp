@@ -80,10 +80,10 @@ void post_car_mode_handler(const shared_ptr<Session> session) {
 						{ "Content-Length", ::to_string(body.size()) }
 				});
 			} else {
-				sendError(session, string("unknown mode " + modeInt));
+				sendError(session, "unknown mode " + modeInt);
 			}
 		} else {
-			sendError(session, string("unknown mode " + mode_str));
+			sendError(session, "unknown mode " + mode_str);
 		}
 	} else {
 		sendError(session, "car not connected");
