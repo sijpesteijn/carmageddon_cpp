@@ -34,21 +34,21 @@ void PWM::setPeriod(int period) {
 	this->period = period;
 	string cmd = "echo " + to_string(this->period) + " > " + this->pwmNr + "period";
 	system(cmd.c_str());
-	syslog(LOG_DEBUG, "PWM(%d) Period set to &d", this->pwmNr, this->period);
+	syslog(LOG_DEBUG, "PWM(%d) Period set to %d", this->pwmNr, this->period);
 }
 
 void PWM::setDutyCycle(int duty_cycle) {
 	this->duty_cycle = duty_cycle;
 	string cmd = "echo " + to_string(this->duty_cycle) + " > " + this->pwmNr + "duty_cycle";
 	system(cmd.c_str());
-	syslog(LOG_DEBUG, "PWM(%d) Duty cycle set to &d ", this->pwmNr, this->duty_cycle);
+	syslog(LOG_DEBUG, "PWM(%d) Duty cycle set to %d ", this->pwmNr, this->duty_cycle);
 }
 
 void PWM::setEnable(int enable) {
 	this->enable = enable;
 	string cmd = "echo " + to_string(this->enable) + " > " + this->pwmNr + "enable";
 	system(cmd.c_str());
-	syslog(LOG_DEBUG, "PWM(%d) Enable set to &d", this->pwmNr, this->enable);
+	syslog(LOG_DEBUG, "PWM(%d) Enable set to %d", this->pwmNr, this->enable);
 }
 
 int PWM::getEnabled() {
