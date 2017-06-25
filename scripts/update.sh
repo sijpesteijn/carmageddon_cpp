@@ -2,4 +2,4 @@
 
 git pull
 make
-./dist/carmageddon
+./dist/carmageddon > /dev/null 2>&1
