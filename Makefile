@@ -1,5 +1,4 @@
 OS := $(shell uname -s)
-OS_TYPE := $(shell uname -p)
 CC=g++
 CFLAGS=-O0 -g3 -Wall -c -fmessage-length=0 -std=c++11
 LIBS=-I/usr/local/include/opencv -I/usr/local/include/restbed
@@ -10,14 +9,14 @@ carmageddon: ./dist/util.o ./dist/gpio.o ./dist/pwm.o ./dist/camera.o ./dist/car
 	$(CC) -L/usr/local/lib -o "./dist/carmageddon" ./dist/util.o ./dist/main.o ./dist/rest.o ./dist/camera_resource.o ./dist/car_resource.o ./dist/lifeline_handler.o ./dist/carstatus_handler.o ./dist/camera.o ./dist/car.o ./dist/gpio.o ./dist/pwm.o ./dist/steer.o ./dist/engine.o -lrestbed -lpthread -lcrypto -lssl -lopencv_shape -lopencv_stitching -lopencv_objdetect -lopencv_superres -lopencv_videostab -lopencv_calib3d -lopencv_features2d -lopencv_highgui -lopencv_videoio -lopencv_imgcodecs -lopencv_video -lopencv_photo -lopencv_ml -lopencv_imgproc -lopencv_flann -lopencv_core
 	
 ./dist/gpio.o: ./src/domain/gpio.h ./src/domain/gpio.cpp ./src/domain/gpiomock.cpp
-ifneq ($(filter arm%,$(UNAME_P)),)
+ifeq ($(OS),Linux)
 	$(CC) $(CFLAGS) -o./dist/gpio.o ./src/domain/gpio.cpp
 else
 	$(CC) $(CFLAGS) -o./dist/gpio.o ./src/domain/gpiomock.cpp
 endif
 
 ./dist/pwm.o: ./src/domain/pwm.h ./src/domain/pwm.cpp ./src/domain/pwmmock.cpp
-ifneq ($(filter arm%,$(UNAME_P)),)
+ifeq ($(OS),Linux)
 	$(CC) $(CFLAGS) -o./dist/pwm.o ./src/domain/pwm.cpp
 else
 	$(CC) $(CFLAGS) -o./dist/pwm.o ./src/domain/pwmmock.cpp
