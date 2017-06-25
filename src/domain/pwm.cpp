@@ -41,14 +41,14 @@ void PWM::setDutyCycle(int duty_cycle) {
 	this->duty_cycle = duty_cycle;
 	string cmd = "echo " + to_string(this->duty_cycle) + " > " + this->pwmNr + "duty_cycle";
 	system(cmd.c_str());
-	cout << "PWM(" << this->pwmNr << ") Duty cycle set to " << this->duty_cycle << endl;
+	syslog(LOG_DEBUG, "PWM(%d) Duty cycle set to &d ", this->pwmNr, this->duty_cycle);
 }
 
 void PWM::setEnable(int enable) {
 	this->enable = enable;
 	string cmd = "echo " + to_string(this->enable) + " > " + this->pwmNr + "enable";
 	system(cmd.c_str());
-	cout << "PWM(" << this->pwmNr << ") Enable set to " << this->enable << endl;
+	syslog(LOG_DEBUG, "PWM(%d) Enable set to &d", this->pwmNr, this->enable);
 }
 
 int PWM::getEnabled() {
