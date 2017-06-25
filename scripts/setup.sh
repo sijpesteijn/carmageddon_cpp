@@ -33,6 +33,8 @@ RESTBED:
 apt-get -y install libssl-dev
 git submodule init
 git submodule update
+mkdir build
+cd build
 cmake -DBUILD_SHARED=YES -DBUILD_EXAMPLES=NO -DBUILD_TESTS=NO ..
 make install
 
