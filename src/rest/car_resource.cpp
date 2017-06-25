@@ -56,6 +56,14 @@ void get_car_mode_handler(const shared_ptr<Session> session) {
 	session->close(OK, body, { { "Content-Length", ::to_string(body.size()) }});
 }
 
+void sendError(const shared_ptr<Session> session, string msg) {
+	const string body = "{\"error\": \"" + msg + "\"}";
+	session->close(500, body, {
+			{ "Content-Type", "application/json" },
+			{ "Content-Length", ::to_string(body.size()) }
+	});
+}
+
 void post_car_mode_handler(const shared_ptr<Session> session) {
 	const auto& request = session->get_request();
 	if (car->getEnabled()) {
@@ -66,6 +74,8 @@ void post_car_mode_handler(const shared_ptr<Session> session) {
 			if (modeInt >= 0 && modeInt <= (int)car_mode::num_values) {
 				syslog(LOG_DEBUG, "Car mode set to: %d", static_cast<std::underlying_type<car_mode>::type>(mode));
 				car->setMode(mode);
+			} else {
+				sendError(session, string("unknown mode " + modeInt));
 			}
 		}
 		const string body = "{\"status\": " + to_string(static_cast<std::underlying_type<car_mode>::type>(car->getMode())) + "}";
@@ -74,11 +84,7 @@ void post_car_mode_handler(const shared_ptr<Session> session) {
 				{ "Content-Length", ::to_string(body.size()) }
 		});
 	} else {
-		const string body = "{\"error\": \"car not connected\"}";
-		session->close(500, body, {
-				{ "Content-Type", "application/json" },
-				{ "Content-Length", ::to_string(body.size()) }
-		});
+		sendError(session, "car not connected");
 	}
 }
 
