@@ -2,3 +2,4 @@
 
 git pull
 make
+./dist/carmageddon
