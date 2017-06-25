@@ -25,7 +25,7 @@ app.factory('websocketFactory', function ($websocket, $location, $interval) {
         var connected = false;
         var pinger;
 
-        var url = 'ws://carmageddon.dev/' + endpoint;
+        var url = 'ws://192.168.7.2:1984/' + endpoint;
 
         this.connect = function() {
             try {

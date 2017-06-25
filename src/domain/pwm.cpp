@@ -36,21 +36,21 @@ void PWM::setPeriod(int period) {
 	this->period = period;
 	string cmd = "echo " + to_string(this->period) + " > " + this->pwmNr + "period";
 	system(cmd.c_str());
-	cout << "Period set to " << this->period << endl;
+	cout << "PWM(" << this->pwmNr << ") Period set to " << this->period << endl;
 }
 
 void PWM::setDutyCycle(int duty_cycle) {
 	this->duty_cycle = duty_cycle;
 	string cmd = "echo " + to_string(this->duty_cycle) + " > " + this->pwmNr + "duty_cycle";
 	system(cmd.c_str());
-	cout << "Duty cycle set to " << this->duty_cycle << endl;
+	cout << "PWM(" << this->pwmNr << ") Duty cycle set to " << this->duty_cycle << endl;
 }
 
 void PWM::setEnable(int enable) {
 	this->enable = enable;
 	string cmd = "echo " + to_string(this->enable) + " > " + this->pwmNr + "enable";
 	system(cmd.c_str());
-	cout << "Enable set to " << this->enable << endl;
+	cout << "PWM(" << this->pwmNr << ") Enable set to " << this->enable << endl;
 }
 
 int PWM::getEnabled() {
