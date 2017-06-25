@@ -5,7 +5,7 @@
  *      Author: gijs
  */
 #include "car_resource.h"
-#include <iostream>
+#include <syslog.h>
 #include <fstream>
 #include <stdio.h>
 #include <stdlib.h>
@@ -64,8 +64,7 @@ void post_car_mode_handler(const shared_ptr<Session> session) {
 			car_mode mode = static_cast<car_mode>(atoi(mode_str.c_str()));
 			int modeInt = (int)mode;
 			if (modeInt >= 0 && modeInt <= (int)car_mode::num_values) {
-				cout << static_cast<std::underlying_type<car_mode>::type>(mode)
-						<< endl;
+				syslog(LOG_DEBUG, "Car mode set to: %d", static_cast<std::underlying_type<car_mode>::type>(mode));
 				car->setMode(mode);
 			}
 		}
