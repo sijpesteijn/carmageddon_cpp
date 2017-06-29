@@ -124,7 +124,10 @@ void get_lifeline_method_handler( const shared_ptr< Session > session )
                     socket->set_error_handler( lifeline_error_handler );
                     socket->set_message_handler( lifeline_message_handler );
 
-                    socket->send( "Welcome to Corvusoft Chat!", [ ]( const shared_ptr< WebSocket > socket )
+                    const string body = "{\"mode\": " + to_string(static_cast<std::underlying_type<car_mode>::type>(car->getMode())) + ",";
+                    body += "\"angle\": " + to_string(car->getAngle()) + ",";
+                    body += "\"throttle\": " + to_string(car->getThrottle()) + ",";
+                    socket->send( body, [ ]( const shared_ptr< WebSocket > socket )
                     {
                         const auto key = socket->get_key( );
                         sockets.insert( make_pair( key, socket ) );

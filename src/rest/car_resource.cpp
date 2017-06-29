@@ -79,7 +79,7 @@ void post_car_mode_handler(const shared_ptr<Session> session) {
 			if (modeInt >= 0 && modeInt <= (int)car_mode::num_values) {
 				syslog(LOG_DEBUG, "Car mode set to: %d", static_cast<std::underlying_type<car_mode>::type>(mode));
 				car->setMode(mode);
-				const string body = "{\"status\": " + to_string(static_cast<std::underlying_type<car_mode>::type>(car->getMode())) + "}";
+				const string body = "{\"mode\": " + to_string(static_cast<std::underlying_type<car_mode>::type>(car->getMode())) + "}";
 				session->close(OK, body, {
 						{ "Content-Type", "application/json" },
 						{ "Content-Length", ::to_string(body.size()) }

@@ -8,7 +8,7 @@
     function panicButtonController($scope, $resource) {
 
         $scope.panic = function() {
-            $resource('./rest/car/panic').save({}, {},
+            $resource('car/stop').save({}, {},
                 function (success) {
                     console.debug('panic signal send', success);
                 },

@@ -22,23 +22,13 @@
         // });
 
         $scope.updateCarMode = function(carMode) {
-            $scope.car.mode = carMode;
-            $rootScope.carMode = $scope.car.mode;
             $resource($rootScope.hostName + 'car/mode/:mode').save({
-                    mode: $scope.car.mode
+                    mode: carMode
                 }, {},
-                function (success) {
-                    console.debug('mode send', success);
-                },
-                function (error) {
-                    console.error('mode update failed', error);
-                });
-        };
-
-        $scope.blowHorn = function() {
-            $resource('./rest/car/horn').save({}, {},
-                function (success) {
-                    // console.debug('mode send', success);
+                function (data) {
+                    $scope.car.mode = data.status;
+                    $rootScope.carMode = $scope.car.mode;
+                    console.debug('mode send');
                 },
                 function (error) {
                     console.error('mode update failed', error);
