@@ -77,7 +77,7 @@ Mat Camera::takeSnapshot() {
 	auto dur = now - then;
 	typedef std::chrono::duration<float> microseconds;
 	auto secs = std::chrono::duration_cast<microseconds>(dur);
-	syslog(LOG_ERR, "Took %f usec",  secs.count());
+	syslog(LOG_DEBUG, "Took %f usec",  secs.count());
 
 	return this->frame;
 }

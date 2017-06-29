@@ -25,7 +25,7 @@
         });
 
         function postThrottle(throttle) {
-            $resource('./rest/car/engine/:throttle').save({
+            $resource('car/engine/:throttle').save({
                     throttle: throttle
                 }, {},
                 function (success) {
@@ -39,7 +39,7 @@
         $interval(function () {
             var currAngle = Math.round(joystick.deltaX()/3);
             if (currAngle != $scope.angle) {
-                $resource('./rest/car/steer/:angle').save({
+                $resource('car/steer/:angle').save({
                         angle: currAngle
                     }, {},
                     function (success) {

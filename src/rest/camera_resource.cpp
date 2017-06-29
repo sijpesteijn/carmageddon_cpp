@@ -8,6 +8,7 @@
 #include "camera_resource.h"
 #include <iostream>
 #include <fstream>
+#include <syslog.h>
 #include "rest.h"
 #include "opencv2/core/utility.hpp"
 #include "opencv2/imgproc.hpp"
@@ -18,6 +19,8 @@
 using namespace cv;
 using namespace std;
 
+#define CAMERA_STATUS "/camera/status"
+#define CAMERA_SNAPSHOT "/camera/snapshot"
 Camera *camera;
 
 void get_camera_status_handler( const shared_ptr< Session > session)
@@ -41,43 +44,19 @@ void get_camera_snapshot_handler( const shared_ptr< Session > session)
 	session->close( OK, body, headers );
 }
 
-void get_pic_test_handler( const shared_ptr< Session > session)
-{
-	const auto request = session->get_request( );
-	const string filename = request->get_path_parameter( "filename" );
-
-	cout << filename << endl;
-
-	ifstream stream(filename, ios::in | ios::binary);
-	if ( stream.is_open() )
-	{
-		const string body = string( istreambuf_iterator< char >( stream ), istreambuf_iterator< char >( ) );
-		const multimap< string, string > headers
-		{
-			{ "Content-Type", "image/jpeg" },
-			{ "Content-Length", ::to_string( body.length( ) ) }
-		};
-		stream.close();
-		session->close( OK, body, headers );
-	}
-	else
-	{
-		session->close( NOT_FOUND );
-	}
-}
-
 camera_resource::camera_resource(Camera *cam) {
 	camera = cam;
-	this->cameraGetStatusResource->set_path( "/camera/status" );
+	this->cameraGetStatusResource->set_path( CAMERA_STATUS );
 	this->cameraGetStatusResource->set_method_handler( "GET", get_camera_status_handler );
-	this->cameraSnapshotResource->set_path( "/camera/snapshot" );
+	syslog(LOG_DEBUG, "Restbed: %s",  CAMERA_STATUS);
+
+	this->cameraSnapshotResource->set_path( CAMERA_SNAPSHOT );
 	this->cameraSnapshotResource->set_method_handler( "GET", get_camera_snapshot_handler );
-	this->picTestResource->set_path( "/picTest" );
-	this->picTestResource->set_method_handler( "GET", get_pic_test_handler );
+	syslog(LOG_DEBUG, "Restbed: %s",  CAMERA_SNAPSHOT);
 }
 
 list<shared_ptr<Resource>> camera_resource::getResources() {
-	list<shared_ptr<Resource>> l = { this->cameraSnapshotResource, this->cameraGetStatusResource, this->picTestResource };
+	list<shared_ptr<Resource>> l = { this->cameraSnapshotResource, this->cameraGetStatusResource };
 	return l;
 }
 

@@ -8,7 +8,7 @@
     function carStatusController($rootScope, $scope, $resource, websocketFactory) {
         $scope.connected = false;
         $scope.car = {};
-        $rootScope.carMode;
+        $rootScope.carMode = 0;
         $scope.modes = ['stopped','manual','autonomous'];
 
         var websocket = websocketFactory.create('car_status');

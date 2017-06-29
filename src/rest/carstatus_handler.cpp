@@ -6,7 +6,7 @@
  */
 
 #include <map>
-#include <iostream>
+#include <syslog.h>
 #include <chrono>
 #include <string>
 #include <cstring>
@@ -27,6 +27,7 @@ using namespace std;
 using namespace restbed;
 using namespace std::chrono;
 
+#define CAR_STATUS "/car_status"
 static Car *car;
 static pthread_mutex_t checker_lock = PTHREAD_MUTEX_INITIALIZER;
 static shared_ptr< Service > service = nullptr;
@@ -64,7 +65,6 @@ void carstatus_message_handler( const shared_ptr< WebSocket > source, const shar
     }
     else if ( opcode == WebSocketMessage::PONG_FRAME )
     {
-    	cout << "PONG" << endl;
         //Ignore PONG_FRAME.
         //
         //Every time the ping_handler is scheduled to run, it fires off a PING_FRAME to each
@@ -147,14 +147,14 @@ void* carstatus_connectionChecker(void* params) {
 	Car *car = (Car*) params;
 	while(1) {
 		if (pthread_mutex_lock(&checker_lock) != 0) {
-			cout << "Sockethandler: Could not get a lock on the queue" << endl;
+			syslog(LOG_ERR, "Sockethandler: Could not get a lock on the queue");
 		}
 		if (car->getEnabled() != 0 && sockets.size() == 0) {
-			cout << "No connections car stopped" << endl;
+			syslog(LOG_ERR, "No connections car stopped");
 			car->setEnabled(0);
 		}
 		if (pthread_mutex_unlock(&checker_lock) != 0) {
-			cout << "Sockethandler: Could not unlock the queue" << endl;
+			syslog(LOG_ERR, "Sockethandler: Could not unlock the queue");
 		}
 	}
 	return NULL;
@@ -163,8 +163,9 @@ void* carstatus_connectionChecker(void* params) {
 carstatus_handler::carstatus_handler(Car *carP) {
 	car = carP;
 	this->resource = make_shared< Resource >( );
-	this->resource->set_path( "/car_status" );
+	this->resource->set_path( CAR_STATUS );
 	this->resource->set_method_handler( "GET", get_carstatus_method_handler );
+	syslog(LOG_DEBUG, "Restbed websocket: %s", CAR_STATUS );
 	pthread_t checker;
 	pthread_create(&checker, NULL, carstatus_connectionChecker, carP);
 }

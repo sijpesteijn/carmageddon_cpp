@@ -25,9 +25,10 @@ int Engine::setThrottle(int throttle) {
 		}
 		int duty_cycle = DUTY_MIDDLE + (this->throttle * SPEED_STEP);
 		this->pwm.setDutyCycle(duty_cycle);
+		syslog(LOG_DEBUG, "Throttle set to %d", this->throttle);
 		return 0;
 	} else {
-		return 1;
+		return -1;
 	}
 }
 
@@ -36,6 +37,5 @@ int Engine::getThrottle() {
 }
 
 void Engine::setEnable(int enable) {
-	syslog(LOG_DEBUG, "Engine enable: %d", enable);
 	this->pwm.setEnable(enable);
 }

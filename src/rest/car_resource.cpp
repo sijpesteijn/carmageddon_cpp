@@ -10,10 +10,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-
 #include "rest.h"
 
 using namespace std;
+
+#define CAR_MODE "/car/mode"
+#define CAR_STOP "/car/stop"
+#define CAR_ANGLE_POST "/car/steer/{angle: .*}"
+#define CAR_THROTTLE_POST "/car/engine/{throttle: .*}"
+#define CAR_MODE_POST "/car/mode/{mode: .*}"
 
 static Car *car;
 void post_stop_handler(const shared_ptr<Session> session) {
@@ -92,18 +97,25 @@ void post_car_mode_handler(const shared_ptr<Session> session) {
 
 car_resource::car_resource(Car *c) {
 	car = c;
-	this->stopResource->set_path("/car/stop");
+	this->stopResource->set_path(CAR_STOP);
 	this->stopResource->set_method_handler("POST", post_stop_handler);
-	this->carGetModeResource->set_path("/car/mode");
-	this->carGetModeResource->set_method_handler("GET",
-			get_car_mode_handler);
-	this->carPostModeResource->set_path("/car/mode/{mode: .*}");
-	this->carPostModeResource->set_method_handler("POST",
-			post_car_mode_handler);
-	this->steerResource->set_path("/car/steer/{angle: .*}");
+	syslog(LOG_DEBUG, "Restbed: %s",  CAR_STOP);
+
+	this->carGetModeResource->set_path(CAR_MODE);
+	this->carGetModeResource->set_method_handler("GET", get_car_mode_handler);
+	syslog(LOG_DEBUG, "Restbed: %s",  CAR_MODE);
+
+	this->carPostModeResource->set_path(CAR_MODE_POST);
+	this->carPostModeResource->set_method_handler("POST", post_car_mode_handler);
+	syslog(LOG_DEBUG, "Restbed: %s",  CAR_MODE_POST);
+
+	this->steerResource->set_path(CAR_ANGLE_POST);
 	this->steerResource->set_method_handler("POST", post_angle_handler);
-	this->engineResource->set_path("/car/engine/{throttle: .*}");
+	syslog(LOG_DEBUG, "Restbed: %s",  CAR_ANGLE_POST);
+
+	this->engineResource->set_path(CAR_THROTTLE_POST);
 	this->engineResource->set_method_handler("POST", post_throttle_handler);
+	syslog(LOG_DEBUG, "Restbed: %s",  CAR_THROTTLE_POST);
 }
 
 list<shared_ptr<Resource>> car_resource::getResources() {

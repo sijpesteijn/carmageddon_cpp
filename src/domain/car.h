@@ -24,7 +24,7 @@ public:
 	int getEnabled();
 	void setEnabled(int enable);
 	car_mode getMode();
-	void setMode(car_mode);
+	int setMode(car_mode);
 private:
 	Steer steer;
 	Engine engine;

@@ -7,6 +7,7 @@
 
 #include "steer.h"
 #include "gpio.h"
+#include <syslog.h>
 #define ONE_DEGREE 8250
 #define DUTY_MIDDLE 1480000
 
@@ -24,6 +25,7 @@ int Steer::setAngle(int angle) {
 		}
 		int duty_cycle = DUTY_MIDDLE + (this->angle * ONE_DEGREE);
 		this->pwm.setDutyCycle(duty_cycle);
+		syslog(LOG_DEBUG, "Angle set to %d", this->angle);
 		return 0;
 	}
 	return 1;

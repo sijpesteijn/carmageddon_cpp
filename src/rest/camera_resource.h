@@ -22,7 +22,6 @@ public:
 private:
 	shared_ptr<Resource> cameraGetStatusResource = make_shared< Resource >( );
 	shared_ptr<Resource> cameraSnapshotResource = make_shared< Resource >( );
-	shared_ptr<Resource> picTestResource = make_shared< Resource >( );
 
 };
 
