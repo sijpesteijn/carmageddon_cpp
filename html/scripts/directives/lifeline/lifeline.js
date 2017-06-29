@@ -10,6 +10,7 @@
         var websocket = websocketFactory.create('lifeline');
 
         websocket.onMessage(function(message) {
+            console.log(message);
             $scope.heartbeat = !$scope.heartbeat;
         });
 
