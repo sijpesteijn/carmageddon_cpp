@@ -3,14 +3,17 @@
 
     app.controller('lifelineCtrl', lifelineController).directive('lifeline', lifelineDirective);
 
-    lifelineController.$inject = ['$scope', 'websocketFactory'];
+    lifelineController.$inject = ['$rootScope', '$scope', 'websocketFactory'];
 
-    function lifelineController($scope, websocketFactory) {
+    function lifelineController($rootScope, $scope, websocketFactory) {
         $scope.heartbeat = false;
         var websocket = websocketFactory.create('lifeline');
 
         websocket.onMessage(function(message) {
-            console.log(message);
+            if (message.data != 'ping') {
+                console.log(message.data);
+                $rootScope.car = message.data;
+            }
             $scope.heartbeat = !$scope.heartbeat;
         });
 

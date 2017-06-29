@@ -47,7 +47,7 @@ app.factory('websocketFactory', function ($websocket, $location, $interval) {
         function startPinger() {
             pinger = $interval(function () {
                 connection.send('ping');
-            }, 100)
+            }, 500)
         }
 
         function stopPinger() {
@@ -90,24 +90,24 @@ app.factory('settingsFactory', function($timeout, $resource, $q) {
     var settings = $q.defer();
 
     function getSettings() {
-        $resource('./rest/settings').get({}, {},
-            function (data) {
-                settings.resolve(data);
-            },
-            function (error) {
-                console.error('mode update failed', error);
-            });
+        // $resource('./rest/settings').get({}, {},
+        //     function (data) {
+        //         settings.resolve(data);
+        //     },
+        //     function (error) {
+        //         console.error('mode update failed', error);
+        //     });
         return settings;
     }
 
     function updateSettings() {
-        $resource('./rest/settings').save({},
-            newSettings,
-            function (success) {
-            },
-            function (error) {
-                console.error('mode update failed', error);
-            });
+        // $resource('./rest/settings').save({},
+        //     newSettings,
+        //     function (success) {
+        //     },
+        //     function (error) {
+        //         console.error('mode update failed', error);
+        //     });
     }
 
     function delaySettingsUpdate(settings) {
