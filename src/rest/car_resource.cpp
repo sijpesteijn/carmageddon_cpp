@@ -24,7 +24,10 @@ static Car *car;
 void post_stop_handler(const shared_ptr<Session> session) {
 	car->setEnabled(0);
 	const string body = "Car stopped.";
-	session->close(OK, body, {{ "Content-Length", ::to_string(body.size()) }});
+	session->close(OK, body, {
+			{ "Content-Type", "application/json" },
+			{ "Content-Length", ::to_string(body.size()) }
+	});
 }
 
 void post_angle_handler(const shared_ptr<Session> session) {
@@ -36,8 +39,11 @@ void post_angle_handler(const shared_ptr<Session> session) {
 		const int angle = atoi(request->get_path_parameter("angle").c_str());
 
 		car->setAngle(angle);
-		const string body = "Angle set to: " + to_string(car->getAngle());
-		session->close(OK); //, body, {{ "Content-Length", ::to_string(body.size()) }});
+		const string body = "";
+		session->close(OK, body, {
+				{ "Content-Type", "application/json" },
+				{ "Content-Length", ::to_string(body.size()) }
+		});
 	}
 }
 
@@ -51,14 +57,20 @@ void post_throttle_handler(const shared_ptr<Session> session) {
 				request->get_path_parameter("throttle").c_str());
 		car->setThrottle(throttle);
 
-		const string body = "Throttle set to: " + to_string(car->getThrottle());
-		session->close(OK); //, body, {{ "Content-Length", ::to_string(body.size()) }});
+		const string body = "";
+		session->close(OK, body, {
+				{ "Content-Type", "application/json" },
+				{ "Content-Length", ::to_string(body.size()) }
+		});
 	}
 }
 
 void get_car_mode_handler(const shared_ptr<Session> session) {
 	const string body = to_string(static_cast<std::underlying_type<car_mode>::type>(car->getMode()));
-	session->close(OK, body, { { "Content-Length", ::to_string(body.size()) }});
+	session->close(OK, body, {
+			{ "Content-Type", "application/json" },
+			{ "Content-Length", ::to_string(body.size()) }
+	});
 }
 
 void sendError(const shared_ptr<Session> session, string msg) {
