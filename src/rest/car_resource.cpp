@@ -37,7 +37,7 @@ void post_angle_handler(const shared_ptr<Session> session) {
 
 		car->setAngle(angle);
 		const string body = "Angle set to: " + to_string(car->getAngle());
-		session->close(OK, body, {{ "Content-Length", ::to_string(body.size()) }});
+		session->close(OK); //, body, {{ "Content-Length", ::to_string(body.size()) }});
 	}
 }
 
@@ -52,7 +52,7 @@ void post_throttle_handler(const shared_ptr<Session> session) {
 		car->setThrottle(throttle);
 
 		const string body = "Throttle set to: " + to_string(car->getThrottle());
-		session->close(OK, body, {{ "Content-Length", ::to_string(body.size()) }});
+		session->close(OK); //, body, {{ "Content-Length", ::to_string(body.size()) }});
 	}
 }
 
