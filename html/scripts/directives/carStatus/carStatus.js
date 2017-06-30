@@ -7,8 +7,6 @@
 
     function carStatusController($rootScope, $scope, $resource, websocketFactory) {
         $scope.connected = false;
-        $scope.car = {};
-        $rootScope.carMode = 0;
         $scope.modes = ['stopped','manual','autonomous'];
 
         var websocket = websocketFactory.create('car_status');
@@ -26,8 +24,7 @@
                     mode: carMode
                 }, {},
                 function (data) {
-                    $scope.car.mode = data.status;
-                    $rootScope.carMode = $scope.car.mode;
+                    $rootScope.car['mode'] = data.mode;
                     console.debug('mode send');
                 },
                 function (error) {

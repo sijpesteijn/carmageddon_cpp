@@ -10,7 +10,7 @@ var app = angular.module('carmageddon', [
 ]);
 
 app.run(function ($rootScope) {
-    $rootScope.carMode = 'stopped';
+    $rootScope.car = { mode: 0, angle: 0, steer: 0};
     $rootScope.hostName = 'http://carmageddon.dev/'
     // $rootScope.settings = {
     //     throttleLimit: 40
