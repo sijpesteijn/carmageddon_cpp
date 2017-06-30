@@ -90,18 +90,21 @@ void lifeline_message_handler( const shared_ptr< WebSocket > source, const share
     }
     else if ( opcode == WebSocketMessage::TEXT_FRAME )
     {
-        auto response = make_shared< WebSocketMessage >( *message );
-        response->set_mask( 0 );
-
-        for ( auto socket : sockets )
-        {
-            auto destination = socket.second;
-            destination->send( response );
-        }
-
-        const auto key = source->get_key( );
-        const auto data = String::format( "Received message '%.*s' from %s\n", message->get_data( ).size( ), message->get_data( ).data( ), key.data( ) );
-        fprintf( stderr, "%s", data.data( ) );
+        const string body = "{\"mode\": " + to_string(static_cast<std::underlying_type<car_mode>::type>(car->getMode())) + ","
+        	 + "\"angle\": " + to_string(car->getAngle()) + "," +
+			 + "\"throttle\": " + to_string(car->getThrottle()) + "}";
+        auto response = make_shared< WebSocketMessage >( body );
+        source->send(response);
+//        response->set_mask( 0 );
+//        for ( auto socket : sockets )
+//        {
+//            auto destination = socket.second;
+//            destination->send( response );
+//        }
+//
+//        const auto key = source->get_key( );
+//        const auto data = String::format( "Received message '%.*s' from %s\n", message->get_data( ).size( ), message->get_data( ).data( ), key.data( ) );
+//        fprintf( stderr, "%s", data.data( ) );
     }
 }
 

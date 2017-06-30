@@ -47,6 +47,9 @@ int Car::setThrottle(int throttle) {
 void Car::setEnabled(int enabled) {
 	syslog(LOG_DEBUG, "Car enabled set to: %d", enabled);
 	this->enabled = enabled;
+	if (this->enabled == 0) {
+		this->mode = car_mode::stopped;
+	}
 	this->steer.setEnable(this->enabled);
 	this->engine.setEnable(this->enabled);
 }

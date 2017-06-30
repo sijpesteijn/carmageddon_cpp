@@ -24,9 +24,9 @@
 
 <div class="workarea">
     <panic-button></panic-button>
-    <div class="car-disabled" ng-if="carMode == 0">De auto is uitgeschakeld.</div>
-    <touchpad ng-if="carMode == 1"></touchpad>
-    <autonomous ng-if="carMode == 2"></autonomous>
+    <div class="car-disabled" ng-if="car.mode == 0">De auto is uitgeschakeld.</div>
+    <touchpad ng-if="car.mode == 1"></touchpad>
+    <autonomous ng-if="car.mode == 2"></autonomous>
 </div>
 <stream></stream>
 
