@@ -15,20 +15,11 @@
 using namespace std;
 
 #define CAR_MODE "/car/mode"
-#define CAR_STOP "/car/stop"
 #define CAR_ANGLE_POST "/car/steer/{angle: .*}"
 #define CAR_THROTTLE_POST "/car/engine/{throttle: .*}"
 #define CAR_MODE_POST "/car/mode/{mode: .*}"
 
 static Car *car;
-void post_stop_handler(const shared_ptr<Session> session) {
-	car->setEnabled(0);
-	const string body = "Car stopped.";
-	session->close(OK, body, {
-			{ "Content-Type", "application/json" },
-			{ "Content-Length", ::to_string(body.size()) }
-	});
-}
 
 void post_angle_handler(const shared_ptr<Session> session) {
 	if (car->getMode() == car_mode::stopped) {
@@ -109,9 +100,6 @@ void post_car_mode_handler(const shared_ptr<Session> session) {
 
 car_resource::car_resource(Car *c) {
 	car = c;
-	this->stopResource->set_path(CAR_STOP);
-	this->stopResource->set_method_handler("POST", post_stop_handler);
-	syslog(LOG_DEBUG, "Restbed: %s",  CAR_STOP);
 
 	this->carGetModeResource->set_path(CAR_MODE);
 	this->carGetModeResource->set_method_handler("GET", get_car_mode_handler);
@@ -132,7 +120,6 @@ car_resource::car_resource(Car *c) {
 
 list<shared_ptr<Resource>> car_resource::getResources() {
 	list<shared_ptr<Resource>> l = { this->carGetModeResource,
-			this->carPostModeResource, this->stopResource,
-			this->steerResource, this->engineResource };
+			this->carPostModeResource, this->steerResource, this->engineResource };
 	return l;
 }

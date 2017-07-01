@@ -12,9 +12,9 @@ var app = angular.module('carmageddon', [
 app.run(function ($rootScope) {
     $rootScope.car = { mode: 0, angle: 0, steer: 0};
     $rootScope.hostName = 'http://carmageddon.dev/'
-    // $rootScope.settings = {
-    //     throttleLimit: 40
-    // }
+    $rootScope.settings = {
+        throttleLimit: 40
+    }
 });
 
 
@@ -47,7 +47,7 @@ app.factory('websocketFactory', function ($websocket, $location, $interval) {
         function startPinger() {
             pinger = $interval(function () {
                 connection.send('ping');
-            }, 100)
+            }, 300)
         }
 
         function stopPinger() {

@@ -22,7 +22,6 @@ public:
 private:
 	shared_ptr<Resource> carGetModeResource = make_shared< Resource >( );
 	shared_ptr<Resource> carPostModeResource = make_shared< Resource >( );
-	shared_ptr<Resource> stopResource = make_shared< Resource >( );
 	shared_ptr<Resource> steerResource = make_shared< Resource >( );
 	shared_ptr<Resource> engineResource = make_shared< Resource >( );
 	shared_ptr<Settings> settings = make_shared< Settings >( );
