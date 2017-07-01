@@ -190,7 +190,7 @@ lifeline_handler::lifeline_handler(Car *carP) {
 	this->resource->set_path( LIFELINE );
 	this->resource->set_method_handler( "GET", get_lifeline_method_handler );
 	syslog(LOG_DEBUG, "Restbed websocket: %s", LIFELINE );
-	pthread_t checker;
+//	pthread_t checker;
 //	pthread_create(&checker, NULL, connectionChecker, carP);
 }
 
