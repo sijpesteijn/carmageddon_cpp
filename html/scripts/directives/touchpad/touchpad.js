@@ -23,7 +23,7 @@
         });
 
         function postThrottle(throttle) {
-            console.log(throttle + ' ' + $rootScope.car);
+            console.log(throttle + ' ' + JSON.stringify($rootScope.car));
             $resource('car/engine/:throttle').save({
                 throttle: throttle
             }, {},
@@ -36,7 +36,7 @@
         }
 
         function postAngle(angle) {
-            console.log(angle + ' ' + $rootScope.car);
+            console.log(angle + ' ' + JSON.stringify($rootScope.car));
             $resource('car/steer/:angle').save({
                 angle: angle
             }, {},
@@ -51,9 +51,7 @@
         $interval(function () {
             var currAngle = Math.round(joystick.deltaX()/3);
             var currThrottle = -1 * Math.round(joystick.deltaY()/3);
-            console.log(currAngle + ' ' + currThrottle);
             if (currAngle == 0 && currThrottle == 0) {
-                console.log($rootScope.car);
                 if (currAngle != $rootScope.car.angle) {
                     postAngle(currAngle);
                     $rootScope.car.angle = 0;

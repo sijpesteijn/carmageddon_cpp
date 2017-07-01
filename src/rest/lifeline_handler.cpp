@@ -162,10 +162,10 @@ void* connectionChecker(void* params) {
 			syslog(LOG_ERR, "No connections car stopped");
 			car->setEnabled(0);
 		}
-		if (car->getEnabled() == 0 && sockets.size() > 0) {
-			syslog(LOG_ERR, "Enabling car since we have websocket connections.");
-			car->setEnabled(1);
-		}
+//		if (car->getEnabled() == 0 && sockets.size() > 0) {
+//			syslog(LOG_ERR, "Enabling car since we have websocket connections.");
+//			car->setEnabled(1);
+//		}
 		if (pthread_mutex_unlock(&checker_lock) != 0) {
 			syslog(LOG_ERR, "Sockethandler: Could not unlock the queue");
 		}

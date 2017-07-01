@@ -8,9 +8,9 @@
     function panicButtonController($scope, $resource) {
 
         $scope.panic = function() {
-            $resource('car/stop').save({}, {},
+            $resource('car/mode/0').save({}, {},
                 function (success) {
-                    console.debug('panic signal send', success);
+                    console.debug('stop signal send', success);
                 },
                 function (error) {
                     console.error('panic signal failed. REALLY a big problem if there is still a lifeline', error);

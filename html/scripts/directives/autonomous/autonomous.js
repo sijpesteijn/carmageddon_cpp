@@ -3,9 +3,9 @@
 
     app.controller('autonomousCtrl', autonomousController).directive('autonomous', autonomousDirective);
 
-    autonomousController.$inject = ['$scope', '$resource', 'websocketFactory', 'settingsFactory'];
+    autonomousController.$inject = ['$scope', '$timeout', '$resource', 'websocketFactory', 'settingsFactory'];
 
-    function autonomousController($scope, $resource, websocketFactory, settingsFactory) {
+    function autonomousController($scope, $timeout, $resource, websocketFactory, settingsFactory) {
         $scope.msgs = [];
         $scope.racing = false;
         $scope.showSettings = true;
@@ -18,13 +18,32 @@
         var offset_y = 40;
         var websocket;
 
+            // $scope.getData = function () {
+                // $resource('/camera/snapshot').get({}, {},
+                //     function (data) {
+                //         webcam.src = data;
+                //     },
+                //     function (error) {
+                //         console.error('mode update failed', error);
+                //     });
+            // };
+
+            // $scope.intervalFunction = function () {
+            //     $timeout(function () {
+            //         $scope.getData();
+            //         $scope.intervalFunction();
+            //     }, 1500)
+            // };
+
+            // $scope.intervalFunction();
+
         settingsFactory.getSettings().then(function (data) {
             $scope.settings = data;
             $scope.framerate = Math.round(1000/$scope.settings.delay);
         });
 
         $scope.startRace = function () {
-            $resource('./rest/autonomous/start').save({}, {},
+            $resource('autonomous/start').save({}, {},
                 function (success) {
                     $scope.msgs = [];
                     $scope.racing = true;
@@ -36,7 +55,7 @@
         };
 
         $scope.stopRace = function () {
-            $resource('./rest/autonomous/stop').save({}, {},
+            $resource('autonomous/stop').save({}, {},
                 function (success) {
                     $scope.racing = false;
                 },
