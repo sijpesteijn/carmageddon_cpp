@@ -37,6 +37,7 @@ static map< string, shared_ptr< WebSocket > > sockets = { };
 
 void lifeline_close_handler( const shared_ptr< WebSocket > socket )
 {
+	syslog(LOG_DEBUG, "Lifeline close handler");
     if ( socket->is_open( ) )
     {
         auto response = make_shared< WebSocketMessage >( WebSocketMessage::CONNECTION_CLOSE_FRAME, Bytes( { 10, 00 } ) );
