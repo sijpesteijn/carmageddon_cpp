@@ -9,7 +9,7 @@
         $scope.connected = false;
         $scope.modes = ['stopped','manual','autonomous'];
 
-        var websocket = websocketFactory.create('car_status');
+        // var websocket = websocketFactory.create('car_status');
 
         // websocket.onMessage(function (message) {
         //     if (message.data !== 'pong') {
@@ -32,10 +32,10 @@
                 });
         };
 
-        $scope.$on('$destroy', function () {
-            console.debug('destroying carstatus controller');
-            websocket.closeConnection();
-        });
+        // $scope.$on('$destroy', function () {
+        //     console.debug('destroying carstatus controller');
+        //     websocket.closeConnection();
+        // });
 
     }
 

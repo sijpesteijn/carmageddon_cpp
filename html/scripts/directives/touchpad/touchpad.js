@@ -8,8 +8,6 @@
     function touchpadController($scope, $resource, $interval, settingsFactory) {
         $scope.show = false;
         $scope.settings = 0;
-        $scope.throttle = 0;
-        $scope.angle = 0;
 
         settingsFactory.getSettings().then(function (data) {
             $scope.settings = data;
@@ -25,51 +23,53 @@
         });
 
         function postThrottle(throttle) {
-            $resource('car/engine/:throttle').save({
-                    throttle: throttle
-                }, {},
-                function (success) {
-                    // console.debug('throttle send', success);
-                },
-                function (error) {
-                    console.error('throttle update failed', error);
-                });
+            console.log('postThrottle');
+            // $resource('car/engine/:throttle').save({
+            //         throttle: throttle
+            //     }, {},
+            //     function (success) {
+            //         // console.debug('throttle send', success);
+            //     },
+            //     function (error) {
+            //         console.error('throttle update failed', error);
+            //     });
         }
 
-        $interval(function () {
-            var currAngle = Math.round(joystick.deltaX()/3);
-            if (currAngle != $scope.angle) {
-                $resource('car/steer/:angle').save({
-                        angle: currAngle
-                    }, {},
-                    function (success) {
-                        // console.debug('angle send', success);
-                    },
-                    function (error) {
-                        console.error('angle update failed', error);
-                    });
-                $scope.angle = currAngle;
-            }
-            var currThrottle = -1 * Math.round(joystick.deltaY()/3);
-            if ($scope.settings.maxThrottle > 0 && currThrottle > $scope.settings.maxThrottle) {
-                currThrottle = $scope.settings.maxThrottle;
-                if ($scope.throttle != currThrottle) {
-                    $scope.throttle = currThrottle;
-                    postThrottle(currThrottle);
-                }
-            } else if ($scope.settings.maxThrottle > 0 && currThrottle < -$scope.settings.maxThrottle) {
-                currThrottle = -$scope.settings.maxThrottle;
-                if ($scope.throttle != currThrottle) {
-                    $scope.throttle = currThrottle;
-                    postThrottle(currThrottle)
-                }
-            } else {
-                if (currThrottle != $scope.throttle) {
-                    postThrottle(currThrottle);
-                    $scope.throttle = currThrottle;
-                }
-            }
-        }, 1 / 30 * 1000);
+        // $interval(function () {
+        //     var currAngle = Math.round(joystick.deltaX()/3);
+        //     if (currAngle != $scope.car.angle) {
+        //         $resource('car/steer/:angle').save({
+        //                 angle: currAngle
+        //             }, {},
+        //             function (success) {
+        //                 // console.debug('angle send', success);
+        //             },
+        //             function (error) {
+        //                 console.error('angle update failed', error);
+        //             });
+        //         $scope.car.angle = currAngle;
+        //     }
+        //     var currThrottle = -1 * Math.round(joystick.deltaY()/3);
+        //     console.log(currThrottle + ' ' + $scope.car);
+        //     if ($scope.settings.maxThrottle > 0 && currThrottle > $scope.settings.maxThrottle) {
+        //         currThrottle = $scope.settings.maxThrottle;
+        //         if ($scope.car.throttle != currThrottle) {
+        //             $scope.car.throttle = currThrottle;
+        //             postThrottle(currThrottle);
+        //         }
+        //     } else if ($scope.settings.maxThrottle > 0 && currThrottle < -$scope.settings.maxThrottle) {
+        //         currThrottle = -$scope.settings.maxThrottle;
+        //         if ($scope.car.throttle != currThrottle) {
+        //             $scope.car.throttle = currThrottle;
+        //             postThrottle(currThrottle)
+        //         }
+        //     } else {
+        //         if (currThrottle != $scope.throttle) {
+        //             postThrottle(currThrottle);
+        //             $scope.car.throttle = currThrottle;
+        //         }
+        //     }
+        // }, 1 / 30 * 1000);
 
         $scope.updateMaxThrottle = function () {
             settingsFactory.updateSettings($scope.settings);
