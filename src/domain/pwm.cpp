@@ -48,7 +48,6 @@ void PWM::setEnable(int enable) {
 	this->enable = enable;
 	string cmd = "echo " + to_string(this->enable) + " > " + this->pwmNr + "enable";
 	system(cmd.c_str());
-	syslog(LOG_DEBUG, "Enable set to %d", this->enable);
 }
 
 int PWM::getEnabled() {
