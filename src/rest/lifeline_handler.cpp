@@ -123,6 +123,9 @@ void get_lifeline_method_handler( const shared_ptr< Session > session )
             {
                 if ( socket->is_open( ) )
                 {
+            		if (pthread_mutex_lock(&checker_lock) != 0) {
+            			syslog(LOG_ERR, "Sockethandler: Could not get a lock on the queue");
+            		}
                     socket->set_close_handler( lifeline_close_handler );
                     socket->set_error_handler( lifeline_error_handler );
                     socket->set_message_handler( lifeline_message_handler );
@@ -133,17 +136,14 @@ void get_lifeline_method_handler( const shared_ptr< Session > session )
                     socket->send( body, [ ]( const shared_ptr< WebSocket > socket )
                     {
                         const auto key = socket->get_key( );
-                		if (pthread_mutex_lock(&checker_lock) != 0) {
-                			syslog(LOG_ERR, "Sockethandler: Could not get a lock on the queue");
-                		}
                         sockets.insert( make_pair( key, socket ) );
-                		if (pthread_mutex_unlock(&checker_lock) != 0) {
-                			syslog(LOG_ERR, "%s", "Sockethandler: Could not unlock the queue");
-                		}
                         car->setEnabled(1);
 
                         fprintf( stderr, "Sent welcome message to %s.\n", key.data( ) );
                     } );
+            		if (pthread_mutex_unlock(&checker_lock) != 0) {
+            			syslog(LOG_ERR, "%s", "Sockethandler: Could not unlock the queue");
+            		}
                 }
                 else
                 {
