@@ -10,7 +10,8 @@
 
 int main( const int, const char** )
 {
-//	openlog ("Carmageddon", LOG_PID | LOG_CONS | LOG_NDELAY | LOG_NOWAIT, LOG_LOCAL0);
+	openlog ("Carmageddon", LOG_PID | LOG_CONS | LOG_NDELAY | LOG_NOWAIT, LOG_LOCAL0);
+	setlogmask(LOG_UPTO(LOG_ERR));
 	syslog (LOG_INFO, "%s", "Starting Carmageddon");
 
 	Car car;
