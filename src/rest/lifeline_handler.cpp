@@ -163,26 +163,26 @@ void get_lifeline_method_handler( const shared_ptr< Session > session )
     session->close( BAD_REQUEST );
 }
 
-void* connectionChecker(void* params) {
-	Car *car = (Car*) params;
-	while(1) {
-		if (pthread_mutex_lock(&checker_lock) != 0) {
-			syslog(LOG_ERR, "Sockethandler: Could not get a lock on the queue");
-		}
-		if (car->getEnabled() != 0 && sockets.size() == 0) {
-			syslog(LOG_ERR, "No connections car stopped");
-			car->setEnabled(0);
-		}
+//void* connectionChecker(void* params) {
+//	Car *car = (Car*) params;
+//	while(1) {
+//		if (pthread_mutex_lock(&checker_lock) != 0) {
+//			syslog(LOG_ERR, "Sockethandler: Could not get a lock on the queue");
+//		}
+//		if (car->getEnabled() != 0 && sockets.size() == 0) {
+//			syslog(LOG_ERR, "No connections car stopped");
+//			car->setEnabled(0);
+//		}
 //		if (car->getEnabled() == 0 && sockets.size() > 0) {
 //			syslog(LOG_ERR, "Enabling car since we have websocket connections.");
 //			car->setEnabled(1);
 //		}
-		if (pthread_mutex_unlock(&checker_lock) != 0) {
-			syslog(LOG_ERR, "Sockethandler: Could not unlock the queue");
-		}
-	}
-	return NULL;
-}
+//		if (pthread_mutex_unlock(&checker_lock) != 0) {
+//			syslog(LOG_ERR, "Sockethandler: Could not unlock the queue");
+//		}
+//	}
+//	return NULL;
+//}
 
 lifeline_handler::lifeline_handler(Car *carP) {
 	car = carP;
