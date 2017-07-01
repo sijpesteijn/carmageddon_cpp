@@ -35,7 +35,6 @@ static pthread_mutex_t checker_lock = PTHREAD_MUTEX_INITIALIZER;
 static shared_ptr< Service > service = nullptr;
 static map< string, shared_ptr< WebSocket > > sockets = { };
 
-
 void lifeline_close_handler( const shared_ptr< WebSocket > socket )
 {
     if ( socket->is_open( ) )
@@ -134,7 +133,13 @@ void get_lifeline_method_handler( const shared_ptr< Session > session )
                     socket->send( body, [ ]( const shared_ptr< WebSocket > socket )
                     {
                         const auto key = socket->get_key( );
+                		if (pthread_mutex_lock(&checker_lock) != 0) {
+                			syslog(LOG_ERR, "Sockethandler: Could not get a lock on the queue");
+                		}
                         sockets.insert( make_pair( key, socket ) );
+                		if (pthread_mutex_unlock(&checker_lock) != 0) {
+                			syslog(LOG_ERR, "%s", "Sockethandler: Could not unlock the queue");
+                		}
                         car->setEnabled(1);
 
                         fprintf( stderr, "Sent welcome message to %s.\n", key.data( ) );
