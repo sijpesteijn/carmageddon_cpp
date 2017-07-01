@@ -45,6 +45,11 @@ void lifeline_close_handler( const shared_ptr< WebSocket > socket )
 
     const auto key = socket->get_key( );
     sockets.erase( key );
+	if (car->getEnabled() != 0 && sockets.size() == 0) {
+		syslog(LOG_ERR, "No connections car stopped");
+		car->setEnabled(0);
+	}
+
     syslog(LOG_DEBUG, "Closed connection to %s.\n", key.data( ));
 
     fprintf( stderr, "Closed connection to %s.\n", key.data( ) );
@@ -186,7 +191,7 @@ lifeline_handler::lifeline_handler(Car *carP) {
 	this->resource->set_method_handler( "GET", get_lifeline_method_handler );
 	syslog(LOG_DEBUG, "Restbed websocket: %s", LIFELINE );
 	pthread_t checker;
-	pthread_create(&checker, NULL, connectionChecker, carP);
+//	pthread_create(&checker, NULL, connectionChecker, carP);
 }
 
 shared_ptr<Resource> lifeline_handler::getResource() {
