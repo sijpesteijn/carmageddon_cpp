@@ -46,6 +46,7 @@ void lifeline_close_handler( const shared_ptr< WebSocket > socket )
 
     const auto key = socket->get_key( );
     sockets.erase( key );
+    syslog(LOG_DEBUG, "Closed connection to %s.\n", key.data( ));
 
     fprintf( stderr, "Closed connection to %s.\n", key.data( ) );
 }
