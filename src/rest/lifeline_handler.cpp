@@ -96,7 +96,8 @@ void lifeline_message_handler( const shared_ptr< WebSocket > source, const share
     else if ( opcode == WebSocketMessage::TEXT_FRAME )
     {
         const string body = "{\"mode\": " + to_string(static_cast<std::underlying_type<car_mode>::type>(car->getMode())) + ","
-        	 + "\"angle\": " + to_string(car->getAngle()) + "," +
+        	 + "\"angle\": " + to_string(car->getAngle()) + ","
+			 + "\"enabled\": " + to_string(car->getEnabled()) + ","
 			 + "\"throttle\": " + to_string(car->getThrottle()) + "}";
         auto response = make_shared< WebSocketMessage >(WebSocketMessage::TEXT_FRAME, body );
         source->send(response);
