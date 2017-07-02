@@ -46,20 +46,19 @@ void lifeline_close_handler( const shared_ptr< WebSocket > socket )
 
     const auto key = socket->get_key( );
     sockets.erase( key );
+    syslog(LOG_DEBUG, "%i", sockets.size());
 	if (car->getEnabled() != 0 && sockets.size() == 0) {
 		syslog(LOG_ERR, "No connections car stopped");
 		car->setEnabled(0);
 	}
 
     syslog(LOG_DEBUG, "Closed connection to %s.\n", key.data( ));
-
-    fprintf( stderr, "Closed connection to %s.\n", key.data( ) );
 }
 
 void lifeline_error_handler( const shared_ptr< WebSocket > socket, const error_code error )
 {
     const auto key = socket->get_key( );
-    fprintf( stderr, "WebSocket Errored '%s' for %s.\n", error.message( ).data( ), key.data( ) );
+    syslog(LOG_ERR, "WebSocket Errored '%s' for %s.\n", error.message( ).data( ), key.data( ) );
 }
 
 void lifeline_message_handler( const shared_ptr< WebSocket > source, const shared_ptr< WebSocketMessage > message )
@@ -143,6 +142,7 @@ void get_lifeline_method_handler( const shared_ptr< Session > session )
                     {
                         const auto key = socket->get_key( );
                         sockets.insert( make_pair( key, socket ) );
+                        syslog(LOG_DEBUG, "%i", sockets.size());
                         car->setEnabled(1);
 
                         fprintf( stderr, "Sent welcome message to %s.\n", key.data( ) );
