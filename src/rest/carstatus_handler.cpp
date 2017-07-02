@@ -166,8 +166,8 @@ carstatus_handler::carstatus_handler(Car *carP) {
 	this->resource->set_path( CAR_STATUS );
 	this->resource->set_method_handler( "GET", get_carstatus_method_handler );
 	syslog(LOG_DEBUG, "Restbed websocket: %s", CAR_STATUS );
-	pthread_t checker;
-	pthread_create(&checker, NULL, carstatus_connectionChecker, carP);
+//	pthread_t checker;
+//	pthread_create(&checker, NULL, carstatus_connectionChecker, carP);
 }
 
 shared_ptr<Resource> carstatus_handler::getResource() {
