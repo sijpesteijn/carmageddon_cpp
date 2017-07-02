@@ -19,13 +19,13 @@
         var websocket;
 
             // $scope.getData = function () {
-                // $resource('/camera/snapshot').get({}, {},
-                //     function (data) {
-                //         webcam.src = data;
-                //     },
-                //     function (error) {
-                //         console.error('mode update failed', error);
-                //     });
+                $resource('/camera/snapshot').get({}, {},
+                    function (data) {
+                        $scope.imgsrc = data;
+                    },
+                    function (error) {
+                        console.error('mode update failed', error);
+                    });
             // };
 
             // $scope.intervalFunction = function () {

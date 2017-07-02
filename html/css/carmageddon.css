@@ -149,6 +149,7 @@ header {
   padding: 6px;
   margin-right: 5px;
   border-radius: 12px;
+  min-width: 220px;
 }
 .car-status .car .angle {
   width: 30px;

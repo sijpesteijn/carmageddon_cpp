@@ -30,7 +30,7 @@ Rest::Rest(car_resource *car_res, camera_resource *camera_res, lifeline_handler 
     	this->service.publish( resource );
     }
     this->service.publish( lifeline_handler->getResource());
-//    this->service.publish( carstatus_handler->getResource());
+    this->service.publish( carstatus_handler->getResource());
     this->service.start( settings );
 }
 

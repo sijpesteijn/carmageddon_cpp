@@ -51,29 +51,18 @@
         $interval(function () {
             var currAngle = Math.round(joystick.deltaX()/3);
             var currThrottle = -1 * Math.round(joystick.deltaY()/3);
-            if (currAngle == 0 && currThrottle == 0) {
-                if (currAngle != $rootScope.car.angle) {
-                    postAngle(currAngle);
-                    $rootScope.car.angle = 0;
-                }
-                if (currThrottle != $rootScope.car.throttle) {
-                    postThrottle(currThrottle);
-                    $rootScope.car.throttle = 0;
-                }
-            } else {
-                if (currAngle != $rootScope.car.angle) {
-                    postAngle(currAngle);
-                    $rootScope.car.angle = currAngle;
-                }
-                if (currThrottle > $scope.settings.maxThrottle) {
-                    currThrottle = $scope.settings.maxThrottle;
-                } else if (currThrottle < -$scope.settings.maxThrottle) {
-                    currThrottle = -$scope.settings.maxThrottle;
-                } 
-                if (currThrottle != $scope.throttle) {
-                    postThrottle(currThrottle);
-                    $rootScope.car.throttle = currThrottle;
-                }
+            if (currAngle != $rootScope.car.angle) {
+                postAngle(currAngle);
+                $rootScope.car.angle = currAngle;
+            }
+            if (currThrottle > $scope.settings.maxThrottle) {
+                currThrottle = $scope.settings.maxThrottle;
+            } else if (currThrottle < -$scope.settings.maxThrottle) {
+                currThrottle = -$scope.settings.maxThrottle;
+            } 
+            if (currThrottle != $rootScope.car.throttle) {
+                postThrottle(currThrottle);
+                $rootScope.car.throttle = currThrottle;
             }
         }, 1 / 30 * 1000);
 

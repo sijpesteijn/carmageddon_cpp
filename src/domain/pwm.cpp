@@ -21,7 +21,7 @@ map<string, string> pwmMap = {
 PWM::PWM(string pwmNr) {
 	this->pwmNr = pwmMap[pwmNr];
 	this->setPeriod(20000000);
-	this->setDutyCycle(10000000);
+	this->setDutyCycle(1000000);
 }
 
 PWM::PWM(string pwmNr, int period, int duty_cycle) {
