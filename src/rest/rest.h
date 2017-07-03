@@ -22,8 +22,7 @@ class Rest {
 public:
 	Rest(car_resource *car_res,
 			camera_resource *camera_res,
-			lifeline_handler *lifeline_handler,
-			carstatus_handler *carstatus_handler);
+			lifeline_handler *lifeline_handler);
 private:
     Service service;
 };

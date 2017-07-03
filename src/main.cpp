@@ -19,7 +19,6 @@ int main( const int, const char** )
 	camera_resource camera_res(&camera);
 	car_resource car_res(&car);
 	lifeline_handler ll_handler(&car);
-	carstatus_handler cs_handler(&car);
-	Rest rest(&car_res, &camera_res, &ll_handler, &cs_handler);
+	Rest rest(&car_res, &camera_res, &ll_handler);
     return EXIT_SUCCESS;
 }

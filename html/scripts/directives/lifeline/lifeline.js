@@ -11,7 +11,8 @@
 
         websocket.onMessage(function(message) {
             if (message.data != 'ping') {
-                $rootScope.car = JSON.parse(message.data);
+                // $rootScope.car = JSON.parse(message.data);
+                // console.log($rootScope.car);
             }
             $scope.heartbeat = !$scope.heartbeat;
         });
