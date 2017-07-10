@@ -8,8 +8,8 @@
 #include "engine.h"
 #include "gpio.h"
 #include <syslog.h>
-#define DUTY_MIDDLE 1480000
-#define SPEED_STEP 2500
+#define DUTY_MIDDLE 1500000
+#define SPEED_STEP 15000
 
 Engine::Engine():pwm("P9.21") {
 }
@@ -17,11 +17,11 @@ Engine::Engine():pwm("P9.21") {
 int Engine::setThrottle(int throttle) {
 	if (this->pwm.getEnabled() == 1) {
 		this->throttle = throttle;
-		if (this->throttle < -120) {
-			this->throttle = -120;
+		if (this->throttle < -100) {
+			this->throttle = -100;
 		}
-		if (this->throttle >120) {
-			this->throttle = 120;
+		if (this->throttle >100) {
+			this->throttle = 100;
 		}
 		int duty_cycle = DUTY_MIDDLE + (this->throttle * SPEED_STEP);
 		this->pwm.setDutyCycle(duty_cycle);

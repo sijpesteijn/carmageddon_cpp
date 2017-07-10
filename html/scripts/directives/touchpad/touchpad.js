@@ -7,11 +7,6 @@
 
     function touchpadController($rootScope, $scope, $resource, $interval, settingsFactory) {
         $scope.show = false;
-        $scope.settings = 0;
-
-        settingsFactory.getSettings().then(function (data) {
-            $scope.settings = data;
-        });
 
         var joystick = new VirtualJoystick({
             container: document.getElementById('touchpad'),
@@ -49,12 +44,13 @@
         }
 
         $interval(function () {
-            var currAngle = Math.round(joystick.deltaX()/3);
-            var currThrottle = -1 * Math.round(joystick.deltaY()/3);
+            var currAngle = Math.round(joystick.deltaX());
+            var currThrottle = -1 * Math.round(joystick.deltaY());
             if (currAngle != $rootScope.car.angle) {
                 postAngle(currAngle);
                 $rootScope.car.angle = currAngle;
             }
+
             if (currThrottle > $scope.settings.maxThrottle) {
                 currThrottle = $scope.settings.maxThrottle;
             } else if (currThrottle < -$scope.settings.maxThrottle) {
@@ -66,9 +62,9 @@
             }
         }, 1 / 30 * 1000);
 
-        $scope.updateMaxThrottle = function () {
-            settingsFactory.updateSettings($scope.settings);
-        }
+        // $scope.updateMaxThrottle = function () {
+        //     $rootScope.settings..updateSettings($scope.settings);
+        // }
     }
 
     function touchpadDirective() {

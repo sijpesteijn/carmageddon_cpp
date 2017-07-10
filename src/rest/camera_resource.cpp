@@ -32,6 +32,7 @@ void get_camera_status_handler( const shared_ptr< Session > session)
 void get_camera_snapshot_handler( const shared_ptr< Session > session)
 {
 	Mat snapshot = camera->takeSnapshot();
+	// TODO iets beters dan dit. Mat moet een ifstream worden. Maar hoe?
 	imwrite("bla.jpg", snapshot);
 	ifstream stream("bla.jpg", ios::in | ios::binary);
 	const string body = string( istreambuf_iterator< char >( stream ), istreambuf_iterator< char >( ) );

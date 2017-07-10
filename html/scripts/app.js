@@ -25,7 +25,7 @@ app.factory('websocketFactory', function ($websocket, $location, $interval) {
         var connected = false;
         var pinger;
 
-        var url = 'ws://192.168.88.90:1984/' + endpoint;
+        var url = 'ws://192.168.88.82:1984/' + endpoint;
 
         this.connect = function() {
             try {
