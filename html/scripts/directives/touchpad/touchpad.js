@@ -14,7 +14,7 @@
             baseY: 400,
             mouseSupport: true,
             limitStickTravel: true,
-            stickRadius: 150
+            stickRadius: 200
         });
 
         function postThrottle(throttle) {
@@ -44,8 +44,8 @@
         }
 
         $interval(function () {
-            var currAngle = Math.round(joystick.deltaX());
-            var currThrottle = -1 * Math.round(joystick.deltaY());
+            var currAngle = Math.round(joystick.deltaX()/2);
+            var currThrottle = -1 * Math.round(joystick.deltaY()/2);
             if (currAngle != $rootScope.car.angle) {
                 postAngle(currAngle);
                 $rootScope.car.angle = currAngle;

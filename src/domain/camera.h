@@ -13,8 +13,10 @@
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/highgui.hpp"
 #include <pthread.h>
+#include <vector>
 
 using namespace cv;
+using namespace std;
 
 class Camera {
 public:
@@ -24,6 +26,8 @@ public:
 	VideoCapture cap;
 	Mat frame;
 	pthread_cond_t frame_not_empty = PTHREAD_COND_INITIALIZER;
+private:
+	vector<Vec2f> detectLines(Mat src);
 };
 
 #endif /* SRC_DOMAIN_CAMERA_H_ */

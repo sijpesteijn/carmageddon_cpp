@@ -16,6 +16,7 @@ ln -s /media/card/notouch/root /root
 ln -s /media/card/notouch/cache /var/cache
 
 ls -l /dev/disk/by-uuid
+vi /etc/fstab
 UUID=b7da6e16-c9cb-4d0c-b90d-9c1c9b5badcc /media/card ext4 defaults,rw,auto,user,exec 0 0
 
 

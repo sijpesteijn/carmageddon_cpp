@@ -68,8 +68,23 @@ Mat Camera::takeSnapshot() {
     auto then = std::chrono::system_clock::now();
 //	this->cap >> this->frame;
 //    pthread_cond_wait(&this->frame_not_empty, &this->frame_lock);
-    cvtColor(this->frame, this->frame, CV_BGR2GRAY);
-    Canny(this->frame, this->frame, 0, 30, 3);
+        Rect roi = Rect(0, 0, 640, 240);
+//        this->frame = Mat(this->frame, roi);
+    Canny(this->frame, this->frame, 50, 200, 3);
+//    cvtColor(this->frame, this->frame, COLOR_GRAY2BGR);
+//    vector<Vec2f> lines = this->detectLines(this->frame);
+//    for( size_t i = 0; i < lines.size(); i++ )
+//    {
+//        float rho = lines[i][0], theta = lines[i][1];
+//        Point pt1, pt2;
+//        double a = cos(theta), b = sin(theta);
+//        double x0 = a*rho, y0 = b*rho;
+//        pt1.x = cvRound(x0 + 1000*(-b));
+//        pt1.y = cvRound(y0 + 1000*(a));
+//        pt2.x = cvRound(x0 - 1000*(-b));
+//        pt2.y = cvRound(y0 - 1000*(a));
+//        line( this->frame, pt1, pt2, Scalar(0,0,255), 3, CV_AA);
+//    }
 	if (pthread_mutex_unlock(&frame_lock) != 0) {
 		syslog(LOG_ERR, "%s", "Sockethandler: Could not unlock the queue");
 	}
@@ -80,4 +95,10 @@ Mat Camera::takeSnapshot() {
 	syslog(LOG_DEBUG, "Took %f usec",  secs.count());
 
 	return this->frame;
+}
+
+vector<Vec2f> Camera::detectLines(Mat img) {
+    vector<Vec2f> lines;
+    HoughLinesP(img, lines, 1, CV_PI/180, 50, 50, 10 );
+    return lines;
 }
