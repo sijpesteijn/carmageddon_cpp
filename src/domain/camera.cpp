@@ -68,9 +68,9 @@ Mat Camera::takeSnapshot() {
     auto then = std::chrono::system_clock::now();
 //	this->cap >> this->frame;
 //    pthread_cond_wait(&this->frame_not_empty, &this->frame_lock);
-        Rect roi = Rect(0, 0, 640, 240);
+//        Rect roi = Rect(0, 0, 640, 240);
 //        this->frame = Mat(this->frame, roi);
-    Canny(this->frame, this->frame, 50, 200, 3);
+//    Canny(this->frame, this->frame, 50, 200, 3);
 //    cvtColor(this->frame, this->frame, COLOR_GRAY2BGR);
 //    vector<Vec2f> lines = this->detectLines(this->frame);
 //    for( size_t i = 0; i < lines.size(); i++ )

@@ -9,13 +9,14 @@
 #define SRC_REST_CAMERA_RESOURCE_H_
 
 #include "../domain/camera.h"
+#include "carmageddon_resource.h"
 #include <restbed>
 #include <list>
 
 using namespace std;
 using namespace restbed;
 
-class camera_resource {
+class camera_resource: public carmageddon_resource {
 public:
 	camera_resource(Camera *camera);
 	list<shared_ptr<Resource>> getResources();

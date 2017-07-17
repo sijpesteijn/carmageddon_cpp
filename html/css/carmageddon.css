@@ -203,9 +203,9 @@ header {
   float: left;
   border: 1px solid crimson;
   margin-right: 3px;
-  width: 320px;
+/*  width: 320px;
   height: 240px;
-  position: relative;
+*/  position: relative;
 }
 .autonomous .snapshot #webcam {
   position: absolute;

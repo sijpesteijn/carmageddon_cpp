@@ -18,18 +18,16 @@
 using namespace cv;
 using namespace std;
 
-Rest::Rest(car_resource *car_res, camera_resource *camera_res, lifeline_handler *lifeline_handler) {
+Rest::Rest(list<carmageddon_resource*> resources) {
 	auto settings = make_shared< Settings >( );
     settings->set_port( 1984 );
     settings->set_default_header( "Connection", "close" );
 
-    for ( shared_ptr<Resource> resource : camera_res->getResources()) {
-    	this->service.publish( resource );
+    for ( carmageddon_resource *carma_resource: resources) {
+		for ( shared_ptr<Resource> resource : carma_resource->getResources()) {
+			this->service.publish( resource );
+		}
     }
-    for ( shared_ptr<Resource> resource : car_res->getResources()) {
-    	this->service.publish( resource );
-    }
-    this->service.publish( lifeline_handler->getResource());
     this->service.start( settings );
 }
 

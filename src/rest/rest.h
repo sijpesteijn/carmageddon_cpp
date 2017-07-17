@@ -10,19 +10,16 @@
 
 #include <memory>
 #include <restbed>
-#include "camera_resource.h"
-#include "car_resource.h"
-#include "lifeline_handler.h"
-#include "carstatus_handler.h"
+#include <string>
+#include <list>
+#include "carmageddon_resource.h"
 
 using namespace restbed;
 using namespace std;
 
 class Rest {
 public:
-	Rest(car_resource *car_res,
-			camera_resource *camera_res,
-			lifeline_handler *lifeline_handler);
+	Rest(list<carmageddon_resource*> resources);
 private:
     Service service;
 };

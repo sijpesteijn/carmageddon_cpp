@@ -20,6 +20,7 @@ using namespace std;
 #define CAR_MODE_POST "/car/mode/{mode: .*}"
 
 static Car *car;
+static car_resource *resource;
 
 void post_angle_handler(const shared_ptr<Session> session) {
 	if (car->getMode() == car_mode::stopped) {
@@ -64,14 +65,6 @@ void get_car_mode_handler(const shared_ptr<Session> session) {
 	});
 }
 
-void sendError(const shared_ptr<Session> session, string msg) {
-	const string body = "{\"error\": \"" + msg + "\"}";
-	session->close(500, body, {
-			{ "Content-Type", "application/json" },
-			{ "Content-Length", ::to_string(body.size()) }
-	});
-}
-
 void post_car_mode_handler(const shared_ptr<Session> session) {
 	const auto& request = session->get_request();
 	if (car->getEnabled()) {
@@ -88,13 +81,13 @@ void post_car_mode_handler(const shared_ptr<Session> session) {
 						{ "Content-Length", ::to_string(body.size()) }
 				});
 			} else {
-				sendError(session, "unknown mode " + to_string(modeInt));
+				resource->sendError(session, "unknown mode " + to_string(modeInt));
 			}
 		} else {
-			sendError(session, "unknown mode " + mode_str);
+			resource->sendError(session, "unknown mode " + mode_str);
 		}
 	} else {
-		sendError(session, "car not connected");
+		resource->sendError(session, "car not connected");
 	}
 }
 
@@ -116,6 +109,7 @@ car_resource::car_resource(Car *c) {
 	this->engineResource->set_path(CAR_THROTTLE_POST);
 	this->engineResource->set_method_handler("POST", post_throttle_handler);
 	syslog(LOG_DEBUG, "Restbed: %s",  CAR_THROTTLE_POST);
+	resource = this;
 }
 
 list<shared_ptr<Resource>> car_resource::getResources() {

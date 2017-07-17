@@ -46,7 +46,7 @@ void lifeline_close_handler( const shared_ptr< WebSocket > socket )
 
     const auto key = socket->get_key( );
     sockets.erase( key );
-    syslog(LOG_DEBUG, "%i", sockets.size());
+    syslog(LOG_DEBUG, "%lu", sockets.size());
 	if (car->getEnabled() != 0 && sockets.size() == 0) {
 		syslog(LOG_ERR, "No connections car stopped");
 		car->setEnabled(0);
@@ -143,7 +143,7 @@ void get_lifeline_method_handler( const shared_ptr< Session > session )
                     {
                         const auto key = socket->get_key( );
                         sockets.insert( make_pair( key, socket ) );
-                        syslog(LOG_DEBUG, "%i", sockets.size());
+                        syslog(LOG_DEBUG, "%lu", sockets.size());
                         car->setEnabled(1);
 
                         fprintf( stderr, "Sent welcome message to %s.\n", key.data( ) );
@@ -196,8 +196,8 @@ lifeline_handler::lifeline_handler(Car *carP) {
 //	pthread_create(&checker, NULL, connectionChecker, carP);
 }
 
-shared_ptr<Resource> lifeline_handler::getResource() {
-	return this->resource;
+list<shared_ptr<Resource>> lifeline_handler::getResources() {
+	return { this->resource };
 }
 
 

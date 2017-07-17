@@ -12,8 +12,12 @@ var app = angular.module('carmageddon', [
 app.run(function ($rootScope) {
     $rootScope.car = { mode: 0, angle: 0, steer: 0};
     $rootScope.hostName = 'http://carmageddon.dev/'
-    $rootScope.settings = {
-        throttleLimit: 100
+    $rootScope.carmageddon = { 
+        settings : {
+            throttleLimit: 100,
+            video_width: 640,
+            video_height: 480
+        }
     }
 });
 

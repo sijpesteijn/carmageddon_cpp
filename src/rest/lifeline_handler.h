@@ -10,14 +10,15 @@
 
 #include <restbed>
 #include "../domain/car.h"
+#include "carmageddon_resource.h"
 
 using namespace restbed;
 using namespace std;
 
-class lifeline_handler {
+class lifeline_handler: public carmageddon_resource {
 public:
 	lifeline_handler(Car *car);
-	shared_ptr<Resource> getResource();
+	list<shared_ptr<Resource>> getResources();
 private:
 	shared_ptr<Resource> resource;
 };
