@@ -23,6 +23,7 @@ public:
 	Camera();
 	int status();
 	Mat takeSnapshot();
+	Size getDimensions();
 	VideoCapture cap;
 	Mat frame;
 	pthread_cond_t frame_not_empty = PTHREAD_COND_INITIALIZER;

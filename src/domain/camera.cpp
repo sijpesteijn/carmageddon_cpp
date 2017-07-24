@@ -102,3 +102,8 @@ vector<Vec2f> Camera::detectLines(Mat img) {
     HoughLinesP(img, lines, 1, CV_PI/180, 50, 50, 10 );
     return lines;
 }
+
+Size Camera::getDimensions() {
+	return Size(640, 360);
+//	return Size(this->cap.get(CV_CAP_PROP_FRAME_WIDTH),this->cap.get(CV_CAP_PROP_FRAME_HEIGHT));
+}

@@ -18,13 +18,14 @@ int main( const int, const char** )
 	setlogmask(LOG_UPTO(LOG_DEBUG));
 	syslog (LOG_INFO, "%s", "Starting Carmageddon");
 
+
 	Car car;
 	Camera camera;
-	cpu *carmageddon = new cpu();
 
 	camera_resource camera_res(&camera);
 	car_resource car_res(&car);
 	lifeline_handler ll_handler(&car);
+	cpu *carmageddon = new cpu(&camera, &car, &ll_handler);
 	observer_resource observer_res(carmageddon);
 
 	Rest rest({&camera_res, &car_res, &ll_handler, &observer_res});

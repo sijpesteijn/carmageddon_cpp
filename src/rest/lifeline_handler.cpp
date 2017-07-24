@@ -200,4 +200,9 @@ list<shared_ptr<Resource>> lifeline_handler::getResources() {
 	return { this->resource };
 }
 
+void lifeline_handler::notifyClients() {
+	for(map<string, shared_ptr< WebSocket>>::iterator it = sockets.begin(); it != sockets.end(); ++it) {
+		cout << "MOE" << endl;
+	}
+}
 

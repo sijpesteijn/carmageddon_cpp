@@ -1,0 +1,6 @@
+{
+  "observer" : {
+    "get" : "http://carmageddon.dev/observer/type/:type"
+  }
+
+}

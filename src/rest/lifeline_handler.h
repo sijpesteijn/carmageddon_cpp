@@ -19,6 +19,7 @@ class lifeline_handler: public carmageddon_resource {
 public:
 	lifeline_handler(Car *car);
 	list<shared_ptr<Resource>> getResources();
+	void notifyClients();
 private:
 	shared_ptr<Resource> resource;
 };

@@ -20,7 +20,7 @@ using namespace cv;
 using namespace std;
 
 #define CAMERA_STATUS "/camera/status"
-#define CAMERA_SNAPSHOT "/camera/snapshot"
+#define CAMERA_SNAPSHOT "/camera/snapshot/{timestamp: .*}"
 Camera *camera;
 
 void get_camera_status_handler( const shared_ptr< Session > session)
