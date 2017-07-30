@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Rx';
 import { SettingsService } from '../settings.service';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { Config } from '../app.config';
 
 export interface CarObserver {
     condition_achieved: number;
@@ -22,20 +23,18 @@ export interface Roi {
 @Injectable()
 export class ObserverService {
 
-    constructor(private http: Http, private settings: SettingsService) {
+    constructor(private http: Http, private config: Config) {
 
     }
 
     getObserver(type: string): Observable<CarObserver> {
-        // return this.settings.get('observer.get').concatMap(url => {
-            return (this.http.get("http://carmageddon.dev/observer/:type".replace(':type', type), {} as any)
-                .map(response => {
-                    const data = response.json();
-                    console.log('Ser: ', data);
-                    const observer: CarObserver = data;
-                    return observer;
-                }));
-        // });
+        return (this.http.get(this.config.get('observer.get').replace(':type', type), {} as any)
+            .map(response => {
+                const data = response.json();
+                console.log('Ser: ', data);
+                const observer: CarObserver = data;
+                return observer;
+            }));
     }
 
     saveObserver(type: string, observer: CarObserver): Observable<CarObserver> {

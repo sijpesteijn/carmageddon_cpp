@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {
     NgModule,
-    ApplicationRef
+    ApplicationRef, APP_INITIALIZER
 } from '@angular/core';
 import {
     removeNgStyles,
@@ -31,11 +31,9 @@ import { XLargeDirective } from './home/x-large';
 
 import '../styles/styles.scss';
 import '../styles/headings.css';
-import { TrafficLightObserverComponent } from './observers/traffic-light/traffic-light.component';
 import { ObserverModule } from './observers/observer.module';
-import { SettingsService } from './settings.service';
-import { StreamModule } from './stream/stream.module';
 import { LifeLineComponent } from './lifeline/lifeline.component';
+import { Config } from './app.config';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -49,6 +47,21 @@ type StoreType = {
     disposeOldHosts: () => void
 };
 
+let PROVIDERS = [
+];
+
+if ('local' === process.env.CONTEXT) {
+    PROVIDERS = [
+        { provide: 'settings.path', useValue: './assets/config/application.local.json' },
+        { provide: APP_INITIALIZER, useFactory: (config: Config) => () => config.load('/assets/config/application.local.json'), deps: [Config], multi: true }
+        ]
+} else {
+    PROVIDERS = [
+        { provide: 'settings.path', useValue: './assets/config/application.bb.json' },
+        { provide: APP_INITIALIZER, useFactory: (config: Config) => () => config.load('/assets/config/application.bb.json'), deps: [Config], multi: true }
+    ]
+}
+
 /**
  * `AppModule` is the main entry point into Angular2's bootstraping process
  */
@@ -56,11 +69,11 @@ type StoreType = {
     bootstrap   : [AppComponent],
     declarations: [
         AppComponent,
-        AboutComponent,
-        HomeComponent,
+        // AboutComponent,
+        // HomeComponent,
         NoContentComponent,
         LifeLineComponent,
-        XLargeDirective,
+        // XLargeDirective,
         // TrafficLightObserverComponent
     ],
     /**
@@ -79,8 +92,8 @@ type StoreType = {
     providers   : [
         ENV_PROVIDERS,
         APP_PROVIDERS,
-        SettingsService,
-        { provide: 'settings.path', useValue: '/config/application.json' },
+        ...PROVIDERS,
+        Config
     ]
 })
 export class AppModule {

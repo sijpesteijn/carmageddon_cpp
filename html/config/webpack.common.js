@@ -30,7 +30,7 @@ const ngcWebpack = require('ngc-webpack');
 const HMR = helpers.hasProcessFlag('hot');
 const AOT = process.env.BUILD_AOT || helpers.hasNpmFlag('aot');
 const METADATA = {
-  title: 'Carmageddon',
+  title: 'Carmageddon ' + (process.env.CONTEXT == 'local' ? 'local' : 'bb'),
   baseUrl: '/',
   isDevServer: helpers.isWebpackDevServer(),
   HMR: HMR

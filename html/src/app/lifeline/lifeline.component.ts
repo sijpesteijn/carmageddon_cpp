@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-
-
+import { SettingsService } from '../settings.service';
+import { Config } from '../app.config';
 
 @Component({
     selector: 'lifeline',
@@ -10,8 +10,8 @@ import { Component } from '@angular/core';
 export class LifeLineComponent {
     private lifeline: WebSocket;
 
-    constructor() {
-        this.lifeline = new WebSocket('ws://localhost:1984/lifeline');
+    constructor(private config: Config) {
+        this.lifeline = new WebSocket(config.get('lifeline.ws'));
     }
 
 }
