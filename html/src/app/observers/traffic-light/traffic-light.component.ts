@@ -1,6 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { CarObserver, ObserverService, Roi } from '../observer.service';
 import { StreamComponent } from '../../stream/stream.component';
+
+const MAX_WIDTH = 640;
+const MAX_HEIGHT = 480;
 @Component({
     selector: 'traffic-light',
     template: require('./traffic-light.html'),
@@ -22,6 +25,20 @@ export class TrafficLightObserverComponent {
     }
 
     private setRoi() {
+        if (this.observer) {
+            if (this.observer.roi.x > MAX_WIDTH) {
+                this.observer.roi.x = MAX_WIDTH;
+            }
+            if (this.observer.roi.x + this.observer.roi.width > MAX_WIDTH) {
+                this.observer.roi.width = MAX_WIDTH - this.observer.roi.x;
+            }
+            if (this.observer.roi.y > MAX_HEIGHT) {
+                this.observer.roi.y = MAX_HEIGHT;
+            }
+            if (this.observer.roi.y + this.observer.roi.height > MAX_HEIGHT) {
+                this.observer.roi.height = MAX_HEIGHT - this.observer.roi.y;
+            }
+        }
         this.stream.theRoi = this.observer.roi;
     }
 

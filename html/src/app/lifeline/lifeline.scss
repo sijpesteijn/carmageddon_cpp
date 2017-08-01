@@ -1,4 +1,11 @@
 
+.heartbeat {
+  width: 5px;
+  height: 5px;
+  background-color: red;
+  position: absolute;
+  opacity: 0.2;
+}
 .full {
   opacity: 1;
 }

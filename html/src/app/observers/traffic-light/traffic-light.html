@@ -4,10 +4,10 @@
         <li>Refresh image: <input type="range" min="1" max="20" [(ngModel)]="interval"> {{ interval }} seconds.</li>
         <li>Active: <input type="checkbox" [(ngModel)]="observer.active" (ngModelChange)="updateObserver()"></li>
         <li><button [disabled]="observer.condition_achieved === 0" (click)="resetObserver()">Reset</button></li>
-        <li>Roi x: <input type="range" [min]=0 [max]="480" [(ngModel)]="observer?.roi.x" (ngModelChange)="setRoi()"> {{ observer?.roi.x }}</li>
-        <li>Roi y: <input type="range" [min]=0 [max]="640" [(ngModel)]="observer?.roi.y" (ngModelChange)="setRoi()"> {{ observer?.roi.y }}</li>
-        <li>Roi width: <input type="range" [min]="observer?.roi.x" [max]="640" [(ngModel)]="observer?.roi.width" (ngModelChange)="setRoi()"> {{ observer?.roi.width }}</li>
-        <li>Roi height: <input type="range" [min]="observer?.roi.y" [max]="480" [(ngModel)]="observer?.roi.height" (ngModelChange)="setRoi()"> {{ observer?.roi.height }}</li>
+        <li>Roi x: <input type="range" [min]=0 [max]="640" [(ngModel)]="observer?.roi.x" (ngModelChange)="setRoi()"> {{ observer?.roi.x }}</li>
+        <li>Roi y: <input type="range" [min]=0 [max]="480" [(ngModel)]="observer?.roi.y" (ngModelChange)="setRoi()"> {{ observer?.roi.y }}</li>
+        <li>Roi width: <input type="range" [min]="0" [max]="640" [(ngModel)]="observer?.roi.width" (ngModelChange)="setRoi()"> {{ observer?.roi.width }}</li>
+        <li>Roi height: <input type="range" [min]="0" [max]="480" [(ngModel)]="observer?.roi.height" (ngModelChange)="setRoi()"> {{ observer?.roi.height }}</li>
         <li>Pixel difference: <input type="number" min="0" max="100" [(ngModel)]="observer.pixel_difference" (ngModelChange)="updateObserver()"></li>
     </ul>
     <stream #stream (onChange)="updateRoi($event)" [interval]="interval"></stream>

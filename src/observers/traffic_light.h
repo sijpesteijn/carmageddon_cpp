@@ -21,6 +21,7 @@ public:
 private:
 	int count = 0;
 	int pixel_difference = 70;
+	int current_pixel_difference = 0;
 };
 
 #endif /* SRC_OBSERVERS_TRAFFIC_LIGHT_H_ */

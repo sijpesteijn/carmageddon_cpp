@@ -15,6 +15,7 @@ interface Point {
 })
 export class StreamComponent implements AfterViewInit {
     private reloadInterval: any;
+    private last_update: Date;
     @Input('roi')
     set theRoi(roi: Roi) {
         // console.log(roi);
@@ -27,9 +28,11 @@ export class StreamComponent implements AfterViewInit {
     set interval(interval: number) {
         this._interval = interval;
         clearInterval(this.reloadInterval);
-        setTimeout(() => this.startReload(), 500);
+        this.reloadInterval = undefined;
+        this.startReload();
+        // setTimeout(() => this.startReload(), 500);
     }
-    private _interval = 1;
+    private _interval = 5;
     private roi: Roi;
     @ViewChild('roi') roiElem;
     @ViewChild('webcam') webcamElem;
@@ -71,9 +74,9 @@ export class StreamComponent implements AfterViewInit {
         return false;
     }
 
-    ngAfterViewInit() {
-        this.startReload();
-    }
+    // ngAfterViewInit() {
+    //     this.startReload();
+    // }
 
     private setRoi() {
         if (this.roiElem) {
@@ -100,7 +103,8 @@ export class StreamComponent implements AfterViewInit {
     private startReload() {
         console.log(this._interval * 1000);
         this.reloadInterval = setInterval(() => {
-            this.streamUrl = 'http://carmageddon.dev/camera/snapshot/' + new Date();
+            this.last_update = new Date();
+            this.streamUrl = 'http://carmageddon.dev/camera/snapshot/' + this.last_update;
         }, (this._interval * 1000));
     }
 }

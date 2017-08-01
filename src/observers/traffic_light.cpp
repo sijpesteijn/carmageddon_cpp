@@ -38,6 +38,7 @@ string traffic_light::getJson(void) {
 	json_object_set_new( roi, "width", json_integer( this->roi.width ) );
 	json_object_set_new( root, "roi", roi);
 	json_object_set_new( root, "pixel_difference", json_integer( this->pixel_difference ) );
+	json_object_set_new( root, "current_pixel_difference", json_integer( this->current_pixel_difference ) );
 
 	string dump = json_dumps(root, 0);
 	json_decref(root);
@@ -47,6 +48,7 @@ string traffic_light::getJson(void) {
 int traffic_light::updateWithJson(json_t* root) {
 	this->condition_achieved = json_integer_value(json_object_get(root, "condition_achieved"));
 	this->pixel_difference = json_integer_value(json_object_get(root, "pixel_difference"));
+	this->current_pixel_difference = json_integer_value(json_object_get(root, "current_pixel_difference"));
 	this->active = json_integer_value(json_object_get(root, "active"));
 	this->order = json_integer_value(json_object_get(root, "order"));
 	json_t* roi = json_object_get(root, "roi");
@@ -82,6 +84,7 @@ observer* traffic_light::processSnapshot(Mat snapshot) {
 		if (nonZero > 0 ) {
 			percentage = 100 - (int) (nonZero*100/mask.total());
 		}
+		this->current_pixel_difference = percentage;
 		if (percentage > this->pixel_difference) {
 			this->condition_achieved = 1;
 		}

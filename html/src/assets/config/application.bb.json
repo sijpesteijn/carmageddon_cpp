@@ -3,7 +3,7 @@
     "get" : "http://carmageddon.dev/observer/:type"
   },
   "lifeline": {
-    "ws": "ws://carmageddon.dev/lifelina"
+    "ws": "ws://carmageddon.dev/lifeline"
   }
 
 }
