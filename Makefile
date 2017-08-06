@@ -10,9 +10,9 @@ carmageddon: ./dist/util.o ./dist/gpio.o ./dist/pwm.o ./dist/camera.o ./dist/car
     ./dist/cpu.o ./dist/rest.o  ./dist/main.o
 	$(CC) -L/usr/local/lib -o "./dist/carmageddon" ./dist/util.o ./dist/main.o ./dist/rest.o ./dist/camera_resource.o ./dist/car_resource.o \
 	./dist/lifeline_handler.o ./dist/carstatus_handler.o ./dist/observer_resource.o ./dist/camera.o ./dist/car.o ./dist/gpio.o ./dist/pwm.o \
-	./dist/steer.o ./dist/engine.o  ./dist/traffic_light.o ./dist/cpu.o -lrestbed -lpthread -ljansson -lcrypto -lssl -lopencv_shape -lopencv_stitching \
-	-lopencv_objdetect -lopencv_superres -lopencv_videostab -lopencv_calib3d -lopencv_features2d -lopencv_highgui -lopencv_videoio -lopencv_imgcodecs \
-	-lopencv_video -lopencv_photo -lopencv_ml -lopencv_imgproc -lopencv_flann -lopencv_core
+	./dist/steer.o ./dist/engine.o  ./dist/traffic_light.o ./dist/lane_detection.o ./dist/cpu.o -lrestbed -lpthread -ljansson -lcrypto -lssl \
+	-lopencv_shape -lopencv_stitching -lopencv_objdetect -lopencv_superres -lopencv_videostab -lopencv_calib3d -lopencv_features2d \
+	-lopencv_highgui -lopencv_videoio -lopencv_imgcodecs -lopencv_video -lopencv_photo -lopencv_ml -lopencv_imgproc -lopencv_flann -lopencv_core
 	
 ./dist/gpio.o: ./src/domain/gpio.h ./src/domain/gpio.cpp ./src/domain/gpiomock.cpp
 ifeq ($(OS),Linux)

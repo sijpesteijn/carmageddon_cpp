@@ -1,5 +1,5 @@
 /*
- * traffic_light.h
+ * lane_detection.h
  *
  *  Created on: 14 Jul 2017
  *      Author: gijs
@@ -19,7 +19,6 @@ public:
 	observer* processSnapshot(Mat snapshot);
 	Rect verifyRoi(Mat snaphot);
 private:
-	int count = 0;
 };
 
 #endif /* SRC_OBSERVERS_LANE_DETECTION_H_ */

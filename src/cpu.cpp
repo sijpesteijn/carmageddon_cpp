@@ -7,6 +7,7 @@
 
 #include "cpu.h"
 #include "./observers/traffic_light.h"
+#include "./observers/lane_detection.h"
 #include <syslog.h>
 #include <unistd.h>
 
