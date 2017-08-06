@@ -32,6 +32,8 @@ cpu::cpu(Camera *camera, Car *car, lifeline_handler *ll_handler) {
 	this->ll_handler = ll_handler;
 	traffic_light *tl = new traffic_light(this->camera->getDimensions());
 	this->observers.insert(pair<string, observer*>(tl->getType(), tl));
+	lane_detection *ld = new lane_detection(this->camera->getDimensions());
+	this->observers.insert(pair<string, observer*>(ld->getType(), ld));
 	pthread_t observer_runner;
 	pthread_create(&observer_runner, NULL, checkObservers, this);
 }
