@@ -4,19 +4,21 @@ import { FormsModule } from '@angular/forms';
 import { ObserverService } from './observer.service';
 import { TrafficLightObserverComponent } from './traffic-light/traffic-light.component';
 import { HttpModule } from '@angular/http';
-import { StreamModule } from '../stream/stream.module';
+import { StreamModule } from '../webcam/stream.module';
+import { LaneDetectionComponent } from './lane-detection/lane-detection.component';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
-        HttpModule,
-        StreamModule
+        HttpModule
     ],
     exports: [
+        LaneDetectionComponent,
         TrafficLightObserverComponent
     ],
     declarations: [
+        LaneDetectionComponent,
         TrafficLightObserverComponent
     ],
     providers: [

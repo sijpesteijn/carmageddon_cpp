@@ -12,6 +12,7 @@
 #include <string>
 #include <list>
 #include <memory>
+//#include "../domain/observer.h"
 
 using namespace std;
 using namespace restbed;

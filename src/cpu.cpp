@@ -14,9 +14,10 @@ void* checkObservers(void* params) {
 	cpu *carmageddon = (cpu*) params;
 	Mat snapshot = carmageddon->camera->takeSnapshot();
 	while(1) {
+	    list<observer*> observers = {};
 		for (auto const& i : carmageddon->getObservers()) {
 			  if (i->isActive()) {
-				  i->processSnapshot(snapshot);
+				  observers.push_back(i->processSnapshot(snapshot));
 			  }
 		}
 		carmageddon->ll_handler->notifyClients();

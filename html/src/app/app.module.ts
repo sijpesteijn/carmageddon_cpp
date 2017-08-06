@@ -22,22 +22,23 @@ import { ENV_PROVIDERS } from './environment';
 import { ROUTES } from './app.routes';
 // App is our top level component
 import { AppComponent } from './app.component';
-import { APP_RESOLVER_PROVIDERS } from './app.resolver';
+// import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
-import { HomeComponent } from './home';
-import { AboutComponent } from './about';
 import { NoContentComponent } from './no-content';
-import { XLargeDirective } from './home/x-large';
 
 import '../styles/styles.scss';
 import '../styles/headings.css';
 import { ObserverModule } from './observers/observer.module';
 import { LifeLineComponent } from './lifeline/lifeline.component';
 import { Config } from './app.config';
+import { ObserverTabsModule } from './observer-tabs/observer-tabs.module';
+import { StreamModule } from './webcam/stream.module';
+import { LifeLineModule } from './lifeline/lifeline.module';
+import { WebcamModule } from './webcam/webcam.module';
 
 // Application wide providers
 const APP_PROVIDERS = [
-    ...APP_RESOLVER_PROVIDERS,
+    // ...APP_RESOLVER_PROVIDERS,
     AppState
 ];
 
@@ -69,12 +70,7 @@ if ('local' === process.env.CONTEXT) {
     bootstrap   : [AppComponent],
     declarations: [
         AppComponent,
-        // AboutComponent,
-        // HomeComponent,
-        NoContentComponent,
-        LifeLineComponent,
-        // XLargeDirective,
-        // TrafficLightObserverComponent
+        NoContentComponent
     ],
     /**
      * Import Angular's modules.
@@ -83,7 +79,10 @@ if ('local' === process.env.CONTEXT) {
         BrowserModule,
         FormsModule,
         HttpModule,
+        LifeLineModule,
         ObserverModule,
+        ObserverTabsModule,
+        WebcamModule,
         RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })
     ],
     /**

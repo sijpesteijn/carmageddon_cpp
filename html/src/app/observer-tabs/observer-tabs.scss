@@ -1,0 +1,15 @@
+@import '../../styles/variables';
+
+.observer-tabs {
+  position: relative;
+  overflow: visible;
+
+  .tabs {
+    float: left;
+    list-style: none;
+  }
+
+  .tab {
+    float: left;
+  }
+}

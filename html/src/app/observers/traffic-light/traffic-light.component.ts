@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { CarObserver, ObserverService, Roi } from '../observer.service';
-import { StreamComponent } from '../../stream/stream.component';
+import { StreamComponent } from '../../webcam/stream/stream.component';
 
 const MAX_WIDTH = 640;
 const MAX_HEIGHT = 480;
