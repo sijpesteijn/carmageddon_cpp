@@ -10,7 +10,6 @@
 
 #include <string>
 #include <jansson.h>
-#include "camera.h"
 #include "opencv2/core/utility.hpp"
 
 using namespace std;

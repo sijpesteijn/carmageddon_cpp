@@ -2,25 +2,52 @@
 /* This file is for setting global styles  */
 @import 'variables';
 
-nav {
-  margin-top: 16px;
-}
-
-nav a {
-  background-color: $nav-button-color;
-  color: white;
-  padding: 8px 16px;
-  margin: 8px;
-  vertical-align: middle;
-  line-height: 1.25;
-  text-align: center;
-  text-decoration: none;
-  border-radius: 4px;
+body {
+  margin: 0;
+  padding: 0;
 }
 
 main {
   position: relative;
   overflow: visible;
+}
+
+header {
+  position: relative;
+  overflow: visible;
+  height: $gutter * 1.2;
+  background-color: $background-color;
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+  }
+
+  li {
+    float: left;
+  }
+
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+
+  li a:hover:not(.active) {
+    background-color: #111;
+  }
+
+  .active {
+    background-color: #4CAF50;
+  }
+
+  lifeline {
+    float: right;
+  }
 }
 
 router-outlet {

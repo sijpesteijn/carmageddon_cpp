@@ -6,7 +6,6 @@
  */
 
 #include "steer.h"
-#include "gpio.h"
 #include <syslog.h>
 #define ONE_DEGREE 8250
 #define DUTY_MIDDLE 1480000

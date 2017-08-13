@@ -6,7 +6,6 @@
  */
 
 #include "engine.h"
-#include "gpio.h"
 #include <syslog.h>
 #define DUTY_MIDDLE 1500000
 #define SPEED_STEP 15000
