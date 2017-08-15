@@ -35,6 +35,7 @@ import { ObserverTabsModule } from './observer-tabs/observer-tabs.module';
 import { StreamModule } from './webcam/stream.module';
 import { LifeLineModule } from './lifeline/lifeline.module';
 import { WebcamModule } from './webcam/webcam.module';
+import { NgxVirtualJoystickModule } from 'ngx-virtual-joystick/esm/src';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -80,6 +81,7 @@ if ('local' === process.env.CONTEXT) {
         FormsModule,
         HttpModule,
         LifeLineModule,
+        NgxVirtualJoystickModule.forRoot(),
         ObserverModule,
         ObserverTabsModule,
         WebcamModule,
